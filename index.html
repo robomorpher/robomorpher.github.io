@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070a12">
+  <meta name="description" content="RoboMorpher learns morphology-conditioned action codes from 40 million kinematic examples for cross-embodiment action prediction.">
+  <title>RoboMorpher — Cross-Embodiment Action Prediction</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="hero.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#overview">Skip to content</a>
+<header class="header" id="header">
+  <a class="wordmark" href="#top" aria-label="RoboMorpher home">RoboMorpher</a>
+  <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open navigation"><span></span><span></span></button>
+  <nav id="nav" aria-label="Main navigation"><a href="#overview">Overview</a><a href="#morphgen">MorphGen</a><a href="#method">Method</a><a href="#embodibench">EmbodiBench</a><a href="#results">Results</a><a href="#resources">Resources <span>↗</span></a></nav>
+</header>
+<main>
+  <section class="hero" id="top">
+    <div class="hero-media" aria-hidden="true"><video id="hero-video" autoplay muted loop playsinline poster="assets/hero-poster.webp" tabindex="-1"><source src="assets/hero-field.webm" type="video/webm"><source src="assets/hero-field.mp4" type="video/mp4"></video></div>
+    <div class="hero-shade"></div>
+    <div class="hero-content shell">
+      <h1>RoboMorpher</h1>
+      <p class="hero-title">Scaling Robot Morphology Representations<br class="desktop-break"> for Cross-Embodiment Action Prediction</p>
+      <p class="authors">Anonymous manuscript</p>
+      <div class="hero-actions"><a class="button primary" href="assets/paper.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2h7l3 3v13H5zM12 2v4h3M8 10h4M8 13h4"/></svg>Read the paper <span>↗</span></a><a class="button glass" href="#morphgen"><span class="play-icon">▶</span> Watch the video</a><a class="button glass" href="assets/supplement.pdf" target="_blank" rel="noopener">Supplement <span>↗</span></a></div>
+    </div>
+    <div class="hero-bottom shell"><a class="scroll-hint" href="#overview" aria-label="Scroll to overview"><span>↓</span></a><button class="motion-control" id="motion-control" aria-pressed="false"><span aria-hidden="true">Ⅱ</span> Pause background</button></div>
+  </section>
+
+  <section class="section shell" id="overview">
+    <div class="section-kicker"><span>01</span> OVERVIEW</div>
+    <div class="intro-grid"><h2>Actions need to<br>understand the body.</h2><div class="intro-copy"><p>The same joint configuration can produce different link poses on different robots. RoboMorpher connects control coordinates to their spatial effects through a <strong>morphology-conditioned action tokenizer</strong>.</p><p>Pretrained using robot kinematics, it learns discrete codes that reconstruct both joint angles and link poses. A vision–language–action policy predicts these codes, then refines them into continuous trajectories.</p></div></div>
+    <div class="stats"><div><strong>40<span>M</span></strong><p>morphology–state pairs</p></div><div><strong>6<span>–</span>7</strong><p>joints per generated arm</p></div><div><strong>2 <span>×</span> 2048</strong><p>shared RVQ codebooks</p></div><div><strong>50</strong><p>frames per action chunk</p></div></div>
+    <div class="overview-flow"><div><span class="step-index">01 / GENERATE</span><h3>MorphGen</h3><p>Survey-guided robot descriptions with forward-kinematics supervision.</p></div><span class="flow-arrow" aria-hidden="true">→</span><div><span class="step-index">02 / REPRESENT</span><h3>RoboMorpher</h3><p>Joint-aligned discrete codes, conditioned on the robot’s morphology.</p></div><span class="flow-arrow" aria-hidden="true">→</span><div><span class="step-index">03 / ACT</span><h3>Morphology-aware VLA</h3><p>Discrete action prediction followed by continuous trajectory refinement.</p></div></div>
+  </section>
+
+  <section class="section section-tinted" id="morphgen"><div class="shell">
+    <div class="section-kicker"><span>02</span> MORPHGEN</div>
+    <div class="section-heading"><h2>Many morphologies.<br>One kinematic language.</h2><p>From a survey of 33 robot descriptions to generated six- and seven-joint arms. A common local-Z convention makes kinematics usable across different joint frames and link geometries.</p></div>
+    <figure class="video-figure"><div class="video-topline"><span><i></i> MORPHOLOGY SHOWCASE</span><span>10 SEC · LOOP</span></div><video class="showcase-video" id="showcase-video" controls muted loop playsinline preload="metadata" poster="assets/video-poster.webp" aria-label="Generated robot morphology showcase"><source src="assets/morphgen.webm" type="video/webm"><source src="assets/morphgen.mp4" type="video/mp4">Your browser does not support inline video. <a href="assets/morphgen.mp4">Download the video</a>.</video><figcaption><span>Generated arm geometries in motion.</span><a href="assets/morphgen.mp4" download>Download video ↓</a></figcaption></figure>
+    <div class="morphgen-details"><div class="editorial-note"><span class="mini-label">KINEMATIC DATA, WITHOUT DEMONSTRATIONS</span><h3>Geometry becomes supervision.</h3><p>Position-specific link-length priors guide sampling. Collision-aware inverse kinematics filters home poses, and forward kinematics supplies joint-aligned pose targets.</p><div class="small-stats"><div><strong>33</strong><span>robot descriptions</span></div><div><strong>185</strong><span>reported link lengths</span></div><div><strong>7</strong><span>position-specific priors</span></div></div></div><figure class="plot-figure"><div class="segmented" role="group" aria-label="Survey visualization"><button class="selected" data-survey="lengths" aria-pressed="true">Link-length priors</button><button data-survey="joints" aria-pressed="false">Joint distribution</button></div><img id="survey-image" src="assets/link-lengths.svg" alt="Seven Gaussian priors fitted to 185 reported link lengths" loading="lazy"><figcaption id="survey-caption">Survey-derived priors before truncation and chain-length rescaling. The inventory describes the collected robots, rather than the full hardware population.</figcaption></figure></div>
+    <figure class="gallery-figure"><button class="image-zoom" data-zoom="assets/morphologies.webp" data-caption="96 generated morphologies with varying link geometries and joint-frame arrangements" aria-label="Enlarge generated morphology gallery"><img src="assets/morphologies.webp" alt="Gallery of 96 generated six- and seven-joint robot arms" loading="lazy" width="2000" height="1334"><span class="zoom-tag">↗ EXPAND GALLERY</span></button><figcaption><strong>96 generated morphologies.</strong> Varying link geometries and joint-frame arrangements.</figcaption></figure>
+  </div></section>
+
+  <section class="section shell" id="method">
+    <div class="section-kicker"><span>03</span> METHOD</div>
+    <div class="section-heading"><h2>Learn the body.<br>Predict the action.</h2><p>Three stages connect procedural kinematics to language-conditioned control. Explore the pipeline below.</p></div>
+    <div class="method-tabs" role="tablist" aria-label="Method stages"><button id="tab-generate" role="tab" data-stage="generate" aria-selected="true" aria-controls="method-panel"><span>01</span> Generate</button><button id="tab-tokenize" role="tab" data-stage="tokenize" aria-selected="false" aria-controls="method-panel" tabindex="-1"><span>02</span> Tokenize</button><button id="tab-predict" role="tab" data-stage="predict" aria-selected="false" aria-controls="method-panel" tabindex="-1"><span>03</span> Predict & refine</button></div>
+    <div class="method-panel" id="method-panel" role="tabpanel" aria-labelledby="tab-generate"><div><span class="mini-label" id="method-label">MORPHGEN</span><h3 id="method-title">Scale kinematic supervision.</h3><p id="method-description">Normalize serial-arm chains to a shared local-Z convention, sample new morphologies, and pair configurations with forward-kinematics targets. No manipulation demonstrations are needed for tokenizer pretraining.</p></div><div class="stage-diagram" id="stage-diagram" aria-label="Generation stage"><span>Survey priors</span><b aria-hidden="true">→</b><span>Local-Z arms</span><b aria-hidden="true">→</b><span class="accent">URDF + q + FK</span><small>40M morphology–state pairs</small></div></div>
+    <figure class="architecture-figure"><button class="image-zoom" data-zoom="assets/architecture.webp" data-caption="RoboMorpher: the complete generation, tokenization, and VLA pipeline" aria-label="Enlarge method architecture"><img src="assets/architecture.webp" alt="Full RoboMorpher architecture: MorphGen, morphology-conditioned residual quantization, and discrete-continuous action prediction" loading="lazy" width="2000" height="920"><span class="zoom-tag">↗ EXPAND FIGURE</span></button><figcaption>Joint-aligned morphology features condition the tokenizer and both policy branches. The tokenizer is frozen during policy learning.</figcaption></figure>
+    <div class="method-notes"><div><span class="mini-label">REPRESENTATION</span><h3>Angles and spatial effects.</h3><p>Two discrete indices per valid joint preserve control coordinates alongside child-link position and orientation. Morphology-conditioned decoding allows the same code to represent different joint values on different robots.</p></div><div><span class="mini-label">ACTION PREDICTION</span><h3>Coarse codes. Continuous motion.</h3><p>Ten fitted trajectory nodes become a 50-frame chunk. Eight MaskGIT iterations predict codes; four Euler steps refine the decoded trajectory through a flow-matching branch.</p></div></div>
+  </section>
+
+  <section class="section section-tinted" id="embodibench"><div class="shell">
+    <div class="section-kicker"><span>04</span> EMBODIBENCH</div>
+    <div class="section-heading"><h2>A benchmark for<br>different robot bodies.</h2><p>Ten tabletop tasks across 30 generated URDFs in SAPIEN. Single-arm and same-side or opposite-side dual-arm setups test lifting, picking, pushing, and stacking.</p></div>
+    <div class="benchmark-strip"><div><strong>10</strong><span>tasks</span></div><div><strong>30</strong><span>URDFs per task</span></div><div><strong>15,000</strong><span>demonstrations</span></div><div><strong>1,500</strong><span>trials per method</span></div></div>
+    <div class="task-toolbar"><div class="task-filters" role="group" aria-label="Filter benchmark tasks"><button class="selected" data-filter="all" aria-pressed="true">All tasks <span>10</span></button><button data-filter="lift" aria-pressed="false">Lift</button><button data-filter="pick" aria-pressed="false">Pick</button><button data-filter="push" aria-pressed="false">Push</button><button data-filter="stack" aria-pressed="false">Stack</button></div><span class="keyframe-note">SAVED-TRAJECTORY KEYFRAMES</span></div>
+    <div class="task-grid" id="task-grid"></div>
+    <p class="fine-print">SS: same-side dual-arm · OS: opposite-side dual-arm. These keyframes illustrate task execution from saved trajectories and are separate from learned-policy evaluation.</p>
+  </div></section>
+
+  <section class="section shell" id="results">
+    <div class="section-kicker"><span>05</span> RESULTS</div>
+    <div class="section-heading"><h2>Better joint-space control.<br>Across two benchmarks.</h2><p>RoboMorpher achieves the highest mean success among the evaluated joint-space methods. Each benchmark uses 1,500 trials per method.</p></div>
+    <div class="results-highlights"><div><span class="mini-label">ROBOTWIN 2.0</span><strong>56.40<span>%</span></strong><p><b>+9.73 pp</b> over continuous joint control</p></div><div><span class="mini-label">EMBODIBENCH</span><strong>23.27<span>%</span></strong><p><b>+15.34 pp</b> over continuous joint control</p></div></div>
+    <div class="results-card"><div class="results-card-head"><div><h3>Action representation comparison</h3><p>Mean task success rate (%) ↑</p></div><div class="segmented" role="group" aria-label="Results benchmark"><button data-benchmark="robotwin" class="selected" aria-pressed="true">RoboTwin 2.0</button><button data-benchmark="embodi" aria-pressed="false">EmbodiBench</button></div></div><div id="result-bars" class="result-bars" role="img" aria-label="Success rates for joint-space methods on RoboTwin 2.0"></div><div class="table-scroll"><table class="comparison-table"><caption class="sr-only">Mean policy success on RoboTwin 2.0 and EmbodiBench</caption><thead><tr><th scope="col">Method</th><th scope="col">RoboTwin 2.0</th><th scope="col">EmbodiBench</th></tr></thead><tbody id="results-table"></tbody></table></div><p class="chart-note">StarVLA (EE) is a separate end-effector control reference. It achieves higher mean success on both benchmarks; the control interface differs.</p></div>
+    <div class="findings"><article><span>01 / GEOMETRY MATTERS</span><h3>Link-pose supervision makes the difference.</h3><p>Removing link-pose reconstruction drops EmbodiBench success from <strong>23.27% to 5.33%</strong>, a 17.94 percentage-point decrease, despite retaining morphology conditioning.</p><div class="ablation-mini"><div><span>Full model</span><i style="--bar:100%"></i><b>23.27</b></div><div><span>Without link poses</span><i style="--bar:22.9%"></i><b>5.33</b></div></div></article><article><span>02 / WHERE GAINS CONCENTRATE</span><h3>Lifting improves. Stacking remains open.</h3><p>EmbodiBench lifting success averages <strong>55.11%</strong>, versus 14.00% for continuous joint control. The three lifting tasks account for about 80% of the overall improvement.</p><p class="subtle">All three EmbodiBench stacking tasks remain at 0% for RoboMorpher.</p></article></div>
+    <details class="task-results"><summary>Explore per-task results <span aria-hidden="true">+</span></summary><div class="table-scroll" id="task-results-table"></div></details>
+    <div class="scope-note"><span class="mini-label">SCOPE OF THE EVIDENCE</span><p>These experiments do not establish held-out-morphology transfer, empirical scaling trends, or variability across training seeds. Stacking and reconstruction outliers remain unresolved. See the paper for evaluation details and limitations.</p></div>
+  </section>
+
+  <section class="resources" id="resources"><div class="shell"><div class="section-kicker"><span>06</span> RESOURCES</div><div class="resource-row"><div><h2>Explore RoboMorpher.</h2><p>Full method, experiments, and implementation details.</p></div><div class="resource-links"><a href="assets/paper.pdf" target="_blank" rel="noopener"><span>01</span> Paper <b>PDF ↗</b></a><a href="assets/supplement.pdf" target="_blank" rel="noopener"><span>02</span> Supplement <b>PDF ↗</b></a><a href="assets/morphgen.mp4" download><span>03</span> Morphology video <b>MP4 ↓</b></a></div></div></div></section>
+</main>
+<footer class="shell"><a class="footer-brand" href="#top">RoboMorpher<span>.</span></a><span>Scaling morphology representations for action prediction.</span><a href="#top">Back to top ↑</a></footer>
+<dialog id="image-dialog"><button class="dialog-close" aria-label="Close enlarged figure">✕</button><figure><img id="dialog-image" src="assets/architecture.webp" alt=""><figcaption id="dialog-caption"></figcaption></figure></dialog>
+<div class="sr-only" id="live-status" aria-live="polite"></div>
+</body>
+</html>
