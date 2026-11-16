@@ -24,42 +24,30 @@ motionButton.addEventListener('click', () => {manuallyPaused = !manuallyPaused; 
 const heroObserver = new IntersectionObserver(entries => {for(const entry of entries){if(!entry.isIntersecting)heroVideo.pause();else if(!manuallyPaused)heroVideo.play().catch(()=>{});}}, {threshold:.05});
 heroObserver.observe($('#top'));
 
-$$('[data-survey]').forEach(button => button.addEventListener('click', () => {
-  const lengths=button.dataset.survey==='lengths';
-  $$('[data-survey]').forEach(b=>{const selected=b===button;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected));});
-  $('#survey-image').src=lengths?'assets/link-lengths.svg':'assets/joint-distribution.svg';
-  $('#survey-image').alt=lengths?'Seven Gaussian priors fitted to 185 reported link lengths':'Survey distribution: 21 six-DoF, 9 seven-DoF, and 3 five-DoF robot descriptions';
-  $('#survey-caption').textContent=lengths?'Survey-derived priors before truncation and chain-length rescaling. The inventory describes the collected robots, rather than the full hardware population.':'Six- and seven-DoF arms account for 30 of the 33 surveyed descriptions (90.9%), motivating the generator’s sampling range.';
-}));
-
-const stages={
-  generate:{label:'MORPHGEN',title:'Scale kinematic supervision.',description:'Normalize serial-arm chains to a shared local-Z convention, sample new morphologies, and pair configurations with forward-kinematics targets. No manipulation demonstrations are needed for tokenizer pretraining.',nodes:['Survey priors','Local-Z arms','URDF + q + FK'],note:'40M morphology–state pairs'},
-  tokenize:{label:'ROBOMORPHER',title:'Encode angles with their spatial effects.',description:'Morphology features condition joint-aligned encoding and decoding. Two shared residual codebooks produce two indices per valid joint. Joint-angle and link-pose reconstruction connect action codes to the robot’s geometry.',nodes:['Morphology + q','Residual VQ','Angles + poses'],note:'2 × 2048 codebooks · 2 indices per valid joint'},
-  predict:{label:'MORPHOLOGY-AWARE VLA',title:'From discrete codes to continuous control.',description:'The frozen tokenizer integrates with Qwen3-VL-4B and a two-branch action model. MaskGIT predicts discrete codes; decoded trajectories initialize a continuous flow-matching branch for refinement.',nodes:['Predict codes','Decode 10 → 50','Flow refinement'],note:'8 MaskGIT iterations · 4 Euler steps · 50-frame chunks'}
-};
-function selectStage(button,focus=false){
-  const stage=stages[button.dataset.stage];
-  $$('[data-stage]').forEach(b=>{const selected=b===button;b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;});
-  $('#method-panel').setAttribute('aria-labelledby',button.id);
-  $('#method-label').textContent=stage.label;$('#method-title').textContent=stage.title;$('#method-description').textContent=stage.description;
-  const diagram=$('#stage-diagram');diagram.setAttribute('aria-label',stage.label+' stage');diagram.replaceChildren();
-  stage.nodes.forEach((text,i)=>{if(i){const arrow=document.createElement('b');arrow.textContent='→';arrow.setAttribute('aria-hidden','true');diagram.append(arrow);}const node=document.createElement('span');node.textContent=text;if(i===2)node.className='accent';diagram.append(node);});
-  const note=document.createElement('small');note.textContent=stage.note;diagram.append(note);if(focus)button.focus();
-}
-const tabs=$$('[data-stage]');tabs.forEach((b,index)=>{b.addEventListener('click',()=>selectStage(b));b.addEventListener('keydown',e=>{let next;if(e.key==='ArrowRight')next=(index+1)%tabs.length;if(e.key==='ArrowLeft')next=(index-1+tabs.length)%tabs.length;if(e.key==='Home')next=0;if(e.key==='End')next=tabs.length-1;if(next!==undefined){e.preventDefault();selectStage(tabs[next],true);}});});
+const barCharts = $$('svg[data-animate-bar-chart]');
+const reducedChartMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const barChartObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    entry.target.classList.toggle('is-visible', entry.isIntersecting);
+  });
+}, {threshold: .25});
+barCharts.forEach(chart => {
+  if (reducedChartMotion) chart.classList.add('is-visible');
+  else barChartObserver.observe(chart);
+});
 
 const tasks=[
- ['lift_dual_os','lift','Lift','Dual-arm · opposite-side','OS'],['lift_dual_ss','lift','Lift','Dual-arm · same-side','SS'],['lift_single','lift','Lift','Single-arm','1 ARM'],
- ['pick_dual_os','pick','Pick','Dual-arm · opposite-side','OS'],['pick_dual_ss','pick','Pick','Dual-arm · same-side','SS'],['pick_single','pick','Pick','Single-arm','1 ARM'],
- ['push_dual_ss','push','Push','Dual-arm · same-side','SS'],['stack_dual_os','stack','Stack','Dual-arm · opposite-side','OS'],['stack_dual_ss','stack','Stack','Dual-arm · same-side','SS'],['stack_single','stack','Stack','Single-arm','1 ARM']
+ ['lift_dual_os','Lift','Dual-arm · opposite-side','Lift · Opposite-side'],['lift_dual_ss','Lift','Dual-arm · same-side','Lift · Same-side'],['lift_single','Lift','Single-arm','Lift · Single-arm'],
+ ['pick_dual_os','Pick','Dual-arm · opposite-side','Pick · Opposite-side'],['pick_dual_ss','Pick','Dual-arm · same-side','Pick · Same-side'],['pick_single','Pick','Single-arm','Pick · Single-arm'],
+ ['push_dual_ss','Push','Dual-arm · same-side','Push · Same-side'],['stack_dual_os','Stack','Dual-arm · opposite-side','Stack · Opposite-side'],['stack_dual_ss','Stack','Dual-arm · same-side','Stack · Same-side'],['stack_single','Stack','Single-arm','Stack · Single-arm']
 ];
-tasks.forEach(([file,family,title,setup,badge])=>{
- const article=document.createElement('article');article.className='task-card';article.dataset.family=family;
+tasks.forEach(([file,title,setup,label])=>{
+ const article=document.createElement('article');article.className='task-card';
  const button=document.createElement('button');button.className='image-zoom';button.dataset.zoom='assets/tasks/'+file+'.webp';button.dataset.caption=title+' · '+setup+'. Saved-trajectory keyframe, separate from learned-policy evaluation.';button.setAttribute('aria-label','Enlarge '+title.toLowerCase()+' task, '+setup.toLowerCase());
- const img=document.createElement('img');img.src=button.dataset.zoom;img.alt=title+' task keyframe, '+setup;img.loading='lazy';img.width=640;img.height=480;button.append(img);const zoom=document.createElement('span');zoom.className='zoom-tag';zoom.textContent='↗';button.append(zoom);
- const text=document.createElement('div');text.className='task-card-text';const description=document.createElement('div');const h=document.createElement('h3');h.textContent=title;const small=document.createElement('small');small.textContent=setup;description.append(h,small);const tag=document.createElement('span');tag.textContent=badge;text.append(description,tag);article.append(button,text);$('#task-grid').append(article);
+ const img=document.createElement('img');img.src=button.dataset.zoom;img.alt=title+' task keyframe, '+setup;img.loading='lazy';img.width=640;img.height=480;
+ const name=document.createElement('span');name.className='task-label';name.textContent=label;
+ button.append(img,name);article.append(button);$('#task-grid').append(article);
 });
-$$('[data-filter]').forEach(button=>button.addEventListener('click',()=>{const filter=button.dataset.filter;$$('[data-filter]').forEach(b=>{const selected=b===button;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected));});$$('.task-card').forEach(card=>card.hidden=filter!=='all'&&card.dataset.family!==filter);const count=$$('.task-card').filter(c=>!c.hidden).length;live.textContent=count+' benchmark tasks shown.';}));
 
 const imageDialog=$('#image-dialog');let lastFigure;
 document.addEventListener('click',e=>{const button=e.target.closest('[data-zoom]');if(!button)return;lastFigure=button;$('#dialog-image').src=button.dataset.zoom;$('#dialog-image').alt=button.dataset.caption;$('#dialog-caption').textContent=button.dataset.caption;imageDialog.showModal();document.body.style.overflow='hidden';});
@@ -68,21 +56,235 @@ $('.dialog-close').addEventListener('click',closeDialog);
 imageDialog.addEventListener('click',e=>{if(e.target===imageDialog){const r=imageDialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeDialog();}});
 imageDialog.addEventListener('close',()=>{document.body.style.overflow='';lastFigure?.focus();});
 
-let benchmark='robotwin';let results;
-const labels={robotwin:'RoboTwin 2.0',embodi:'EmbodiBench'};
-const order=['RoboMorpher','StarVLA (joint)','256-bin','FAST','Angle+M','Angle','StarVLA (EE)'];
-function format(v){return v.toFixed(2);}
-function renderResults(){
- if(!results)return;
- const data=results[benchmark];const root=$('#result-bars');root.replaceChildren();root.setAttribute('aria-label','Success rates for joint-space methods on '+labels[benchmark]);
- const methods=data.methods.filter(m=>m.name!=='StarVLA (EE)').sort((a,b)=>b.mean-a.mean);
- for(const method of methods){const row=document.createElement('div');row.className='bar-row'+(method.name==='RoboMorpher'?' ours':'');const name=document.createElement('span');name.className='bar-name';name.textContent=method.name;const track=document.createElement('div');track.className='bar-track';const fill=document.createElement('div');fill.className='bar-fill';fill.style.width=method.mean+'%';track.append(fill);const value=document.createElement('span');value.className='bar-value';value.textContent=format(method.mean);row.append(name,track,value);root.append(row);}
- const taskTable=document.createElement('table');taskTable.className='comparison-table';const caption=document.createElement('caption');caption.className='sr-only';caption.textContent='Per-task success rates on '+labels[benchmark];taskTable.append(caption);const head=document.createElement('thead');const hr=document.createElement('tr');['Method',...data.tasks].forEach(t=>{const th=document.createElement('th');th.scope='col';th.textContent=t;hr.append(th);});head.append(hr);taskTable.append(head);const tbody=document.createElement('tbody');
- for(const name of order){const method=data.methods.find(m=>m.name===name);const tr=document.createElement('tr');if(name==='RoboMorpher')tr.className='ours';if(name==='StarVLA (EE)')tr.className='reference';[name,...method.tasks.map(format)].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td);});tbody.append(tr);}taskTable.append(tbody);$('#task-results-table').replaceChildren(taskTable);
+const copyCitationButton = $('#copy-citation');
+let copyFeedbackTimer;
+async function copyCitationText(text) {
+  const helper = document.createElement('textarea');
+  helper.value = text; helper.readOnly = true;
+  helper.style.cssText = 'position:fixed;left:-9999px;top:0;';
+  document.body.append(helper); helper.select();
+  try {
+    if (document.execCommand('copy')) return true;
+  } catch { /* Use the Clipboard API when the browser requires it. */ }
+  finally { helper.remove(); copyCitationButton.focus(); }
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    return false;
+  }
 }
-fetch('results.json').then(r=>{if(!r.ok)throw Error('Results could not load');return r.json();}).then(data=>{
- results=data;
- for(const name of order){const tr=document.createElement('tr');if(name==='RoboMorpher')tr.className='ours';if(name==='StarVLA (EE)')tr.className='reference';const cell=document.createElement('td');cell.textContent=name==='RoboMorpher'?'VLA + RoboMorpher':name;if(name==='StarVLA (EE)'){const small=document.createElement('small');small.textContent='Separate control interface';cell.append(small);}tr.append(cell);for(const key of ['robotwin','embodi']){const td=document.createElement('td');td.textContent=format(data[key].methods.find(m=>m.name===name).mean)+'%';tr.append(td);}$('#results-table').append(tr);}
- renderResults();
-}).catch(()=>{$('#result-bars').innerHTML='<p>See the full results in the <a href="assets/paper.pdf">paper (PDF)</a>.</p>';});
-$$('[data-benchmark]').forEach(button=>button.addEventListener('click',()=>{benchmark=button.dataset.benchmark;$$('[data-benchmark]').forEach(b=>{const selected=b===button;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected));});renderResults();live.textContent=labels[benchmark]+' results shown.';}));
+copyCitationButton.addEventListener('click', async () => {
+  const copied = await copyCitationText($('#bibtex-code').textContent.trim());
+  copyCitationButton.dataset.copied = String(copied);
+  $('span', copyCitationButton).textContent = copied ? 'Copied' : 'Select text';
+  live.textContent = copied ? 'BibTeX citation copied.' : 'Select and copy the citation text.';
+  if (!copied) {
+    const range = document.createRange(); range.selectNodeContents($('#bibtex-code'));
+    const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range);
+  }
+  clearTimeout(copyFeedbackTimer);
+  copyFeedbackTimer = setTimeout(() => {
+    $('span', copyCitationButton).textContent = 'Copy';
+    delete copyCitationButton.dataset.copied;
+  }, 2200);
+});
+
+let results;
+const labels = {robotwin: 'RoboTwin 2.0', embodi: 'EmbodiBench'};
+const jointMethodOrder = ['Angle+M', '256-bin', 'FAST', 'StarVLA (joint)', 'Angle', 'RoboMorpher'];
+const referenceName = 'StarVLA (EE)';
+function format(value) { return value.toFixed(2); }
+function bestScores(methods, valueAt) {
+  return {
+    joint: Math.max(...methods.filter(m => m.name !== referenceName).map(valueAt)),
+    all: Math.max(...methods.map(valueAt))
+  };
+}
+function scoreCell(value, best, reference) {
+  const cell = document.createElement('td');
+  const score = document.createElement('span');
+  score.className = 'result-score';
+  const jointBest = !reference && best.joint > 0 && Math.abs(value - best.joint) < 1e-6;
+  const columnMax = best.all > 0 && Math.abs(value - best.all) < 1e-6;
+  score.classList.toggle('is-joint-best', jointBest);
+  score.classList.toggle('is-column-max', columnMax);
+  score.textContent = format(value);
+  const marks = [];
+  if (jointBest) marks.push('Best joint-space');
+  if (columnMax) marks.push('Column maximum');
+  if (marks.length) score.title = marks.join(' · ');
+  cell.append(score);
+  return cell;
+}
+function groupHeading(body, title, columns) {
+  const row = document.createElement('tr');
+  row.className = 'control-group';
+  const heading = document.createElement('th');
+  heading.colSpan = columns;
+  heading.scope = 'rowgroup';
+  const label = document.createElement('span');
+  label.className = 'control-group-label';
+  label.textContent = title;
+  heading.append(label);
+  row.append(heading);
+  body.append(row);
+}
+function methodRow(name) {
+  const row = document.createElement('tr');
+  row.dataset.method = name;
+  if (name === 'RoboMorpher') row.className = 'method-ours';
+  if (name === referenceName) row.className = 'method-reference';
+  const heading = document.createElement('th');
+  heading.scope = 'row';
+  heading.className = 'method-column';
+  heading.textContent = name === 'RoboMorpher' ? 'VLA + RoboMorpher' : name;
+  row.append(heading);
+  return row;
+}
+function renderMeanResults() {
+  const jointBody = $('#results-table');
+  const referenceBody = $('#results-reference');
+  jointBody.replaceChildren(); referenceBody.replaceChildren();
+  groupHeading(jointBody, 'Joint-space control', 3);
+  groupHeading(referenceBody, 'End-effector reference', 3);
+  const benchmarks = ['robotwin', 'embodi'];
+  const best = benchmarks.map(key => bestScores(results[key].methods, m => m.mean));
+  [...jointMethodOrder, referenceName].forEach(name => {
+    const row = methodRow(name);
+    benchmarks.forEach((key, i) => {
+      const method = results[key].methods.find(m => m.name === name);
+      const cell = scoreCell(method.mean, best[i], name === referenceName);
+      cell.dataset.benchmark = key;
+      row.append(cell);
+    });
+    (name === referenceName ? referenceBody : jointBody).append(row);
+  });
+}
+function taskLabel(task) {
+  const match = tasks.find(([file]) => file === task.replaceAll(' ', '_'));
+  return match ? match[3] : task.charAt(0).toUpperCase() + task.slice(1);
+}
+const taskSetups = {
+  single: {label: 'Single-arm', points: [[12, 19]]},
+  same: {label: 'Dual-arm · same-side', points: [[7, 19], [17, 19]]},
+  opposite: {label: 'Dual-arm · opposite-side', points: [[12, 2], [12, 19]]}
+};
+function taskConfiguration(task) {
+  const match = tasks.find(([file]) => file === task.replaceAll(' ', '_'));
+  if (!match) return null;
+  return {title: match[1], setup: match[0].endsWith('_single') ? 'single' : match[0].endsWith('_ss') ? 'same' : 'opposite'};
+}
+function setupIcon(setup) {
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '0 0 24 22');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.classList.add('setup-icon');
+  const table = document.createElementNS(ns, 'rect');
+  Object.entries({x: 4, y: 6, width: 16, height: 9, rx: 1.6, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.2, opacity: .5}).forEach(([key, value]) => table.setAttribute(key, value));
+  svg.append(table);
+  taskSetups[setup].points.forEach(([x, y]) => {
+    const dot = document.createElementNS(ns, 'circle');
+    Object.entries({cx: x, cy: y, r: 1.8, fill: 'currentColor'}).forEach(([key, value]) => dot.setAttribute(key, value));
+    svg.append(dot);
+  });
+  return svg;
+}
+function renderSetupLegend() {
+  const legend = $('#embodi-setup-legend');
+  legend.replaceChildren();
+  ['opposite', 'same', 'single'].forEach(setup => {
+    const item = document.createElement('span');
+    item.className = 'setup-legend-item';
+    item.append(setupIcon(setup), document.createTextNode(taskSetups[setup].label));
+    legend.append(item);
+  });
+}
+function renderTaskResults(benchmark, containerSelector) {
+  if (!results) return;
+  const data = results[benchmark];
+  const table = document.createElement('table');
+  table.className = 'comparison-table task-comparison-table';
+  table.style.minWidth = `calc(var(--results-method-width) + ${(data.tasks.length + 1) * 70}px)`;
+  const columns = document.createElement('colgroup');
+  Array.from({length: data.tasks.length + 2}, (_, i) => {
+    const column = document.createElement('col');
+    column.style.width = i === 0 ? 'var(--results-method-width)' : '70px';
+    columns.append(column);
+  });
+  table.append(columns);
+  const caption = document.createElement('caption');
+  caption.className = 'sr-only';
+  caption.textContent = 'Per-task success rates (%) on ' + labels[benchmark];
+  table.append(caption);
+  const head = document.createElement('thead');
+  const header = document.createElement('tr');
+  if (benchmark === 'embodi') {
+    table.classList.add('embodi-comparison-table');
+    const method = document.createElement('th');
+    method.textContent = 'Method'; method.scope = 'col'; method.rowSpan = 2; method.className = 'method-column';
+    header.append(method);
+    const configurations = document.createElement('tr');
+    configurations.className = 'configuration-header';
+    data.tasks.forEach((task, i) => {
+      const config = taskConfiguration(task);
+      if (i === 0 || config.title !== taskConfiguration(data.tasks[i - 1]).title) {
+        const group = document.createElement('th');
+        group.textContent = config.title; group.scope = 'colgroup'; group.className = 'task-group-heading';
+        group.colSpan = data.tasks.filter(t => taskConfiguration(t).title === config.title).length;
+        header.append(group);
+      }
+      const cell = document.createElement('th');
+      const label = config.title + ' · ' + taskSetups[config.setup].label;
+      cell.scope = 'col'; cell.title = label; cell.setAttribute('aria-label', label);
+      cell.dataset.task = task; cell.dataset.setup = config.setup;
+      cell.append(setupIcon(config.setup));
+      configurations.append(cell);
+    });
+    const mean = document.createElement('th');
+    mean.textContent = 'Mean'; mean.scope = 'col'; mean.rowSpan = 2; mean.className = 'mean-column';
+    header.append(mean);
+    head.append(header, configurations);
+    renderSetupLegend();
+  } else {
+    ['Method', ...data.tasks.map(taskLabel), 'Mean'].forEach((text, i) => {
+      const cell = document.createElement('th'); cell.scope = 'col'; cell.textContent = text;
+      if (i === 0) cell.className = 'method-column';
+      if (i === data.tasks.length + 1) cell.className = 'mean-column';
+      header.append(cell);
+    });
+    head.append(header);
+  }
+  table.append(head);
+  const jointBody = document.createElement('tbody');
+  const referenceBody = document.createElement('tbody');
+  groupHeading(jointBody, 'Joint-space control', data.tasks.length + 2);
+  groupHeading(referenceBody, 'End-effector reference', data.tasks.length + 2);
+  const best = data.tasks.map((_, i) => bestScores(data.methods, m => m.tasks[i]));
+  [...jointMethodOrder, referenceName].forEach(name => {
+    const method = data.methods.find(m => m.name === name);
+    const row = methodRow(name);
+    method.tasks.forEach((value, i) => {
+      const cell = scoreCell(value, best[i], name === referenceName);
+      cell.dataset.taskIndex = String(i);
+      row.append(cell);
+    });
+    const mean = scoreCell(method.mean, bestScores(data.methods, m => m.mean), name === referenceName);
+    mean.className = 'mean-column';
+    mean.dataset.metric = 'mean';
+    row.append(mean);
+    (name === referenceName ? referenceBody : jointBody).append(row);
+  });
+  table.append(referenceBody, jointBody);
+  $(containerSelector).replaceChildren(table);
+}
+fetch('results.json').then(response => {
+  if (!response.ok) throw Error('Results could not load');
+  return response.json();
+}).then(data => {
+  results = data;
+  renderMeanResults();
+  renderTaskResults('robotwin', '#robotwin-results-table');
+  renderTaskResults('embodi', '#embodi-results-table');
+}).catch(() => { $('#results-error').hidden = false; });

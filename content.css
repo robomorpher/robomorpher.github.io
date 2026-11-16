@@ -1,0 +1,183 @@
+/* Continuous white canvas and a compact rhythm across the paper sections. */
+#overview,
+#morphgen,
+#method,
+#embodibench,
+#results,
+#resources {
+  background: #fff;
+  border: 0;
+  padding-block: 40px 32px;
+}
+
+:is(#overview, #morphgen, #method, #embodibench, #results, #resources) .section-kicker {
+  position: relative;
+  font-size: 16px;
+  line-height: 1.3;
+  letter-spacing: .025em;
+  padding-bottom: 11px;
+  margin-bottom: 18px;
+}
+
+:is(#overview, #morphgen, #method, #embodibench, #results, #resources) .section-kicker::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), #3366ee35 38%, #3366ee00 85%);
+  pointer-events: none;
+}
+
+:is(#overview, #morphgen, #method, #embodibench, #results, #resources) .section-kicker > span {
+  width: 34px;
+  height: 34px;
+  line-height: 33px;
+  font-size: 13px;
+}
+
+.section-heading {
+  margin-bottom: 28px;
+}
+
+#overview .stats {
+  margin-block: 24px;
+  padding-block: 22px 20px;
+}
+
+#morphgen .morphgen-details {
+  margin-bottom: 24px;
+}
+
+#results .results-highlights {
+  padding-block: 24px;
+  margin-bottom: 28px;
+}
+
+#results .findings {
+  margin-block: 32px 24px;
+}
+
+#results .scope-note {
+  margin-top: 24px;
+}
+
+#resources {
+  color: var(--ink);
+}
+
+#resources .resource-links a {
+  border-color: var(--line);
+}
+
+#resources .resource-links a > span,
+#resources .resource-links b {
+  color: var(--muted);
+}
+
+#resources .resource-links a:hover,
+#resources .resource-links a:hover b {
+  color: var(--accent);
+}
+
+#method .architecture-figure {
+  margin: 0;
+}
+
+#method .architecture-figure .image-zoom {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  cursor: zoom-in;
+}
+
+#method .architecture-figure .image-zoom:hover img {
+  transform: none;
+}
+
+#method .architecture-figure figcaption {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+#method .architecture-figure .zoom-tag {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 16px;
+}
+
+.scope-note summary {
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.scope-note[open] summary {
+  color: var(--ink);
+}
+
+.scope-note p {
+  margin-top: 14px;
+}
+
+#results { padding-bottom: 14px; }
+#bibtex { padding-block: 20px 28px; }
+.citation-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 11px; margin-bottom: 12px; border-bottom: 1px solid #dce3f0; }
+.citation-heading h2 { color: var(--accent); font-size: 18px; font-weight: 600; line-height: 1.35; letter-spacing: -.015em; }
+.copy-citation { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 30px; padding: 5px 11px; border: 1px solid #dce3f0; border-radius: 999px; background: #fff; color: #394154; font-size: 11px; font-weight: 600; transition: color .2s, border-color .2s; }
+.copy-citation:hover, .copy-citation[data-copied="true"] { color: var(--accent); border-color: #3366ee80; }
+.copy-citation svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.citation-code { margin: 0; padding: 18px 20px; border: 1px solid #e1e5ef; border-radius: 10px; background: #f7f8fc; color: #424b60; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.citation-code code { font: inherit; }
+
+@media (max-width: 800px) {
+  #bibtex { padding-block: 14px 24px; }
+  .citation-heading h2 { font-size: 16px; }
+  .citation-code { padding: 14px; font-size: 11px; line-height: 1.65; }
+  #overview,
+  #morphgen,
+  #method,
+  #embodibench,
+  #results,
+  #resources {
+    padding-block: 28px 24px;
+  }
+
+  :is(#overview, #morphgen, #method, #embodibench, #results, #resources) .section-kicker {
+    font-size: 14px;
+    padding-bottom: 9px;
+    margin-bottom: 14px;
+  }
+
+  :is(#overview, #morphgen, #method, #embodibench, #results, #resources) .section-kicker > span {
+    width: 32px;
+    height: 32px;
+    line-height: 31px;
+    font-size: 12px;
+  }
+
+  .section-heading {
+    margin-bottom: 24px;
+  }
+
+  #overview .stats {
+    margin-block: 22px;
+  }
+
+  #results .results-highlights {
+    padding-block: 20px;
+    margin-bottom: 24px;
+  }
+
+  #method .architecture-figure figcaption {
+    font-size: 13px;
+    margin-top: 14px;
+  }
+}

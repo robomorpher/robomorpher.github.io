@@ -1,0 +1,147 @@
+/* Full-width survey introduction, paired figures, then generated morphologies. */
+#morphgen .morphgen-details {
+  display: block;
+  padding: 0;
+  margin-bottom: 24px;
+}
+
+#morphgen .editorial-note {
+  margin-bottom: 24px;
+}
+
+#morphgen .editorial-note h2 {
+  font-size: clamp(30px, 2.8vw, 36px);
+  font-weight: 550;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+#morphgen .editorial-note > p {
+  max-width: none;
+  font-size: 15.5px;
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+#morphgen .small-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 18px;
+}
+
+#morphgen .small-stats strong {
+  color: var(--accent);
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+#morphgen .small-stats span {
+  font-size: 10.5px;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+#morphgen .survey-figures {
+  --survey-chart-height: clamp(300px, 25vw, 340px);
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 24px;
+}
+
+#morphgen .plot-figure {
+  display: grid;
+  grid-template-rows: auto var(--survey-chart-height) auto;
+  align-content: start;
+  gap: 10px;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid #00000010;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #fffffff5, #ffffffb8);
+  box-shadow: 0 12px 36px #0000000d, 0 2px 8px #00000006, inset 0 1px 0 #fff;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+#morphgen .plot-figure h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 550;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+#morphgen .survey-chart {
+  display: grid;
+  align-items: center;
+  height: var(--survey-chart-height);
+}
+
+#morphgen .plot-figure :is(img, svg.bar-chart) {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  object-fit: contain;
+}
+
+#morphgen #survey-lengths-panel img {
+  height: var(--survey-chart-height);
+}
+
+#morphgen .joint-charts {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+#morphgen .plot-figure figcaption {
+  font-size: 10.5px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+#morphgen .morphgen-video {
+  margin: 0;
+}
+
+#morphgen .morphgen-video h3 {
+  margin-bottom: 14px;
+  font-size: 24px;
+  font-weight: 550;
+  line-height: 1.3;
+}
+
+#morphgen .showcase-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  aspect-ratio: auto;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@media (max-width: 850px) {
+  #morphgen .editorial-note h2 { font-size: 32px; }
+  #morphgen .survey-figures { grid-template-columns: 1fr; gap: 20px; }
+}
+
+@media (max-width: 520px) {
+  #morphgen .editorial-note { margin-bottom: 20px; }
+  #morphgen .editorial-note h2 { font-size: 30px; }
+  #morphgen .editorial-note > p { font-size: 15px; }
+  #morphgen .small-stats { gap: 12px; }
+  #morphgen .small-stats strong { font-size: 26px; }
+  #morphgen .small-stats span { font-size: 10px; }
+  #morphgen .plot-figure { grid-template-rows: auto auto auto; padding: 14px; }
+  #morphgen .survey-chart { height: auto; }
+  #morphgen #survey-lengths-panel img { height: auto; min-height: 0; max-height: none; }
+  #morphgen .joint-charts { grid-template-columns: 1fr; gap: 16px; }
+  #morphgen .joint-charts :is(img, svg.bar-chart) { max-width: 100%; margin-inline: auto; }
+  #morphgen .plot-figure figcaption { font-size: 10px; }
+  #morphgen .morphgen-video h3 { font-size: 22px; }
+}

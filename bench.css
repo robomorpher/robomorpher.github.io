@@ -1,0 +1,133 @@
+/* Benchmark essentials followed by an uninterrupted wall of task images. */
+#embodibench .bench-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+#embodibench .bench-summary > p {
+  max-width: none;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+#embodibench .benchmark-strip {
+  grid-template-columns: repeat(3, auto);
+  gap: 28px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+#embodibench .benchmark-strip > div {
+  display: flex;
+  gap: 5px;
+}
+
+#embodibench .benchmark-strip strong {
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+#embodibench .benchmark-strip span {
+  margin: 0;
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+#embodibench .task-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+#embodibench .task-card {
+  background: transparent;
+  border: 0;
+  border-radius: 12px;
+  overflow: visible;
+  box-shadow: 0 3px 10px #121b2b0d;
+}
+
+#embodibench .task-card .image-zoom {
+  aspect-ratio: 4 / 3;
+  border-radius: inherit;
+  cursor: zoom-in;
+}
+
+#embodibench .task-card .image-zoom::after {
+  content: "";
+  position: absolute;
+  inset: 42% 0 0;
+  background: linear-gradient(180deg, transparent, #0c1019c7);
+  pointer-events: none;
+}
+
+#embodibench .task-label {
+  position: absolute;
+  z-index: 1;
+  left: 11px;
+  right: 11px;
+  bottom: 10px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+  text-shadow: 0 1px 4px #0005;
+}
+
+#embodibench .task-card .image-zoom:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1100px) {
+  #embodibench .bench-summary {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  #embodibench .benchmark-strip {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 800px) {
+  #embodibench .bench-summary {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  #embodibench .bench-summary > p {
+    max-width: none;
+    font-size: 15px;
+    white-space: normal;
+  }
+
+  #embodibench .benchmark-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    justify-self: stretch;
+  }
+
+  #embodibench .benchmark-strip strong {
+    font-size: 24px;
+  }
+
+  #embodibench .task-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #embodibench .task-label {
+    left: 9px;
+    right: 9px;
+    bottom: 9px;
+    font-size: 12px;
+  }
+}

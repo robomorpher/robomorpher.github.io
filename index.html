@@ -7,16 +7,21 @@
   <meta name="description" content="RoboMorpher learns morphology-conditioned action codes from 40 million kinematic examples for cross-embodiment action prediction.">
   <title>RoboMorpher — Cross-Embodiment Action Prediction</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="hero.css">
-  <script defer src="app.js"></script>
+  <link rel="stylesheet" href="styles.css?v=overview-3">
+  <link rel="stylesheet" href="hero.css?v=hero-compact-1">
+  <link rel="stylesheet" href="overview.css?v=8">
+  <link rel="stylesheet" href="morphgen.css?v=7">
+  <link rel="stylesheet" href="content.css?v=citation-7">
+  <link rel="stylesheet" href="bench.css?v=2">
+  <link rel="stylesheet" href="results.css?v=compact-5">
+  <script defer src="app.js?v=citation-5"></script>
 </head>
 <body>
 <a class="skip" href="#overview">Skip to content</a>
 <header class="header" id="header">
   <a class="wordmark" href="#top" aria-label="RoboMorpher home">RoboMorpher</a>
   <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open navigation"><span></span><span></span></button>
-  <nav id="nav" aria-label="Main navigation"><a href="#overview">Overview</a><a href="#morphgen">MorphGen</a><a href="#method">Method</a><a href="#embodibench">EmbodiBench</a><a href="#results">Results</a><a href="#resources">Resources <span>↗</span></a></nav>
+  <nav id="nav" aria-label="Main navigation"><a href="#overview">Overview</a><a href="#morphgen">MorphGen</a><a href="#method">Method</a><a href="#embodibench">EmbodiBench</a><a href="#results">Results</a><a href="#bibtex">BibTeX</a></nav>
 </header>
 <main>
   <section class="hero" id="top">
@@ -25,58 +30,304 @@
     <div class="hero-content shell">
       <h1>RoboMorpher</h1>
       <p class="hero-title">Scaling Robot Morphology Representations<br class="desktop-break"> for Cross-Embodiment Action Prediction</p>
-      <p class="authors">Anonymous manuscript</p>
-      <div class="hero-actions"><a class="button primary" href="assets/paper.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2h7l3 3v13H5zM12 2v4h3M8 10h4M8 13h4"/></svg>Read the paper <span>↗</span></a><a class="button glass" href="#morphgen"><span class="play-icon">▶</span> Watch the video</a><a class="button glass" href="assets/supplement.pdf" target="_blank" rel="noopener">Supplement <span>↗</span></a></div>
+      <div class="hero-credits">
+        <p class="hero-authors" aria-label="Authors"><span>Wenwei Lin<sup>1</sup>,</span> <span>Yan Qin<sup>2</sup>,</span> <span>Weiliang Deng<sup>3</sup>,</span> <span>Zixuan Li<sup>1</sup>,</span> <span>Kaixuan Wang<sup>4</sup>,</span> <span>Zanxin Chen<sup>5</sup>,</span> <span>Yue Chen<sup>6</sup>,</span> <span>Tianshuo Yang<sup>4</sup>,</span> <span>Junting Chen<sup>7</sup>,</span> <span>Zhixuan Liang<sup>8</sup>,</span> <span>Yao Mu<sup>5</sup>,</span> <span>Ximin Lyu<sup>3</sup>,</span> <span>Renjing Xu<sup>2</sup>,</span> <span>Ping Luo<sup>4</sup>,</span> <span>Tianxing Chen<sup>4</sup></span></p>
+        <ol class="hero-affiliations" aria-label="Author affiliations">
+          <li><sup>1</sup><img src="assets/affiliations/szu.png" alt="Shenzhen University" width="300" height="86"></li>
+          <li><sup>2</sup><img src="assets/affiliations/hkust-gz.png" alt="The Hong Kong University of Science and Technology (Guangzhou)" width="400" height="107"></li>
+          <li><sup>3</sup><img src="assets/affiliations/sysu.png" alt="Sun Yat-sen University" width="240" height="69"></li>
+          <li><sup>4</sup><img src="assets/affiliations/hku.svg" alt="University of Hong Kong" width="276" height="54"></li>
+          <li><sup>5</sup><img src="assets/affiliations/sjtu.png" alt="Shanghai Jiaotong University" width="285" height="83"></li>
+          <li><sup>6</sup><img src="assets/affiliations/pku.png" alt="Peking University" width="569" height="160"></li>
+          <li class="affiliation-nus"><sup>7</sup><span class="affiliation-logo"><img src="assets/affiliations/nus.png" alt="National University of Singapore" width="621" height="122"></span></li>
+          <li class="affiliation-princeton"><sup>8</sup><img src="assets/affiliations/princeton.svg" alt="Princeton University" width="172" height="35"></li>
+        </ol>
+      </div>
+      <div class="hero-actions" aria-label="Project resources">
+        <a class="button primary" href="assets/paper.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2h7l3 3v13H5zM12 2v4h3M8 10h4M8 13h4"/></svg>Paper</a>
+        <button class="button glass" type="button" disabled title="Code coming soon"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5 2 10l5 5M13 5l5 5-5 5"/></svg>Code</button>
+        <a class="button glass" href="#bibtex"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 4h5v6H3zM3 10v2a4 4 0 0 0 4 4M12 4h5v6h-5zM12 10v2a4 4 0 0 0 4 4"/></svg>BibTeX</a>
+      </div>
     </div>
     <div class="hero-bottom shell"><a class="scroll-hint" href="#overview" aria-label="Scroll to overview"><span>↓</span></a><button class="motion-control" id="motion-control" aria-pressed="false"><span aria-hidden="true">Ⅱ</span> Pause background</button></div>
   </section>
 
   <section class="section shell" id="overview">
-    <div class="section-kicker"><span>01</span> OVERVIEW</div>
-    <div class="intro-grid"><h2>Actions need to<br>understand the body.</h2><div class="intro-copy"><p>The same joint configuration can produce different link poses on different robots. RoboMorpher connects control coordinates to their spatial effects through a <strong>morphology-conditioned action tokenizer</strong>.</p><p>Pretrained using robot kinematics, it learns discrete codes that reconstruct both joint angles and link poses. A vision–language–action policy predicts these codes, then refines them into continuous trajectories.</p></div></div>
+    <div class="section-kicker"><span>01</span> Overview</div>
+    <div class="intro-grid"><h2>Actions need to<br>understand the body.</h2><div class="intro-copy"><p>The same joint configuration can produce different link poses on different robots. RoboMorpher connects control coordinates to their spatial effects through a <strong>morphology-conditioned action tokenizer</strong>.</p><p>Kinematic pretraining learns codes that reconstruct joint angles and link poses. A VLA policy predicts these codes and refines continuous trajectories.</p></div></div>
     <div class="stats"><div><strong>40<span>M</span></strong><p>morphology–state pairs</p></div><div><strong>6<span>–</span>7</strong><p>joints per generated arm</p></div><div><strong>2 <span>×</span> 2048</strong><p>shared RVQ codebooks</p></div><div><strong>50</strong><p>frames per action chunk</p></div></div>
-    <div class="overview-flow"><div><span class="step-index">01 / GENERATE</span><h3>MorphGen</h3><p>Survey-guided robot descriptions with forward-kinematics supervision.</p></div><span class="flow-arrow" aria-hidden="true">→</span><div><span class="step-index">02 / REPRESENT</span><h3>RoboMorpher</h3><p>Joint-aligned discrete codes, conditioned on the robot’s morphology.</p></div><span class="flow-arrow" aria-hidden="true">→</span><div><span class="step-index">03 / ACT</span><h3>Morphology-aware VLA</h3><p>Discrete action prediction followed by continuous trajectory refinement.</p></div></div>
+    <div class="overview-flow" id="overview-pipeline" role="group" aria-label="Three stages: generate, represent, and act">
+      <div class="flow-stage">
+        <div class="flow-block"><span class="step-index">01 / GENERATE</span><h3>MorphGen</h3></div>
+        <p>Procedural arms and kinematic supervision.</p>
+      </div>
+      <span class="flow-arrow" aria-hidden="true"><svg viewBox="0 0 64 24" fill="none"><path class="flow-arrow-track" d="M4 12H59M51 4L59 12L51 20"/><path class="flow-arrow-pulse" d="M5 12H16M11 7L16 12L11 17"/></svg></span>
+      <div class="flow-stage">
+        <div class="flow-block"><span class="step-index">02 / REPRESENT</span><h3>RoboMorpher</h3></div>
+        <p>Morphology-conditioned, joint-aligned action codes.</p>
+      </div>
+      <span class="flow-arrow" aria-hidden="true"><svg viewBox="0 0 64 24" fill="none"><path class="flow-arrow-track" d="M4 12H59M51 4L59 12L51 20"/><path class="flow-arrow-pulse" d="M5 12H16M11 7L16 12L11 17"/></svg></span>
+      <div class="flow-stage">
+        <div class="flow-block"><span class="step-index">03 / ACT</span><h3>Morphology-aware VLA</h3></div>
+        <p>Discrete prediction and continuous refinement.</p>
+      </div>
+    </div>
   </section>
 
   <section class="section section-tinted" id="morphgen"><div class="shell">
-    <div class="section-kicker"><span>02</span> MORPHGEN</div>
-    <div class="section-heading"><h2>Many morphologies.<br>One kinematic language.</h2><p>From a survey of 33 robot descriptions to generated six- and seven-joint arms. A common local-Z convention makes kinematics usable across different joint frames and link geometries.</p></div>
-    <figure class="video-figure"><div class="video-topline"><span><i></i> MORPHOLOGY SHOWCASE</span><span>10 SEC · LOOP</span></div><video class="showcase-video" id="showcase-video" controls muted loop playsinline preload="metadata" poster="assets/video-poster.webp" aria-label="Generated robot morphology showcase"><source src="assets/morphgen.webm" type="video/webm"><source src="assets/morphgen.mp4" type="video/mp4">Your browser does not support inline video. <a href="assets/morphgen.mp4">Download the video</a>.</video><figcaption><span>Generated arm geometries in motion.</span><a href="assets/morphgen.mp4" download>Download video ↓</a></figcaption></figure>
-    <div class="morphgen-details"><div class="editorial-note"><span class="mini-label">KINEMATIC DATA, WITHOUT DEMONSTRATIONS</span><h3>Geometry becomes supervision.</h3><p>Position-specific link-length priors guide sampling. Collision-aware inverse kinematics filters home poses, and forward kinematics supplies joint-aligned pose targets.</p><div class="small-stats"><div><strong>33</strong><span>robot descriptions</span></div><div><strong>185</strong><span>reported link lengths</span></div><div><strong>7</strong><span>position-specific priors</span></div></div></div><figure class="plot-figure"><div class="segmented" role="group" aria-label="Survey visualization"><button class="selected" data-survey="lengths" aria-pressed="true">Link-length priors</button><button data-survey="joints" aria-pressed="false">Joint distribution</button></div><img id="survey-image" src="assets/link-lengths.svg" alt="Seven Gaussian priors fitted to 185 reported link lengths" loading="lazy"><figcaption id="survey-caption">Survey-derived priors before truncation and chain-length rescaling. The inventory describes the collected robots, rather than the full hardware population.</figcaption></figure></div>
-    <figure class="gallery-figure"><button class="image-zoom" data-zoom="assets/morphologies.webp" data-caption="96 generated morphologies with varying link geometries and joint-frame arrangements" aria-label="Enlarge generated morphology gallery"><img src="assets/morphologies.webp" alt="Gallery of 96 generated six- and seven-joint robot arms" loading="lazy" width="2000" height="1334"><span class="zoom-tag">↗ EXPAND GALLERY</span></button><figcaption><strong>96 generated morphologies.</strong> Varying link geometries and joint-frame arrangements.</figcaption></figure>
+    <div class="section-kicker"><span>02</span> Morphgen</div>
+    <div class="morphgen-details" id="morphgen-priors">
+      <div class="editorial-note">
+        <h2>Geometry becomes supervision.</h2>
+        <p>Position-specific link-length priors guide sampling. Collision-aware inverse kinematics filters home poses, and forward kinematics supplies joint-aligned pose targets.</p>
+        <div class="small-stats"><div><strong>33</strong><span>robot descriptions</span></div><div><strong>185</strong><span>reported link lengths</span></div><div><strong>7</strong><span>position-specific priors</span></div></div>
+      </div>
+      <div class="survey-figures">
+        <figure class="plot-figure">
+          <h3>Link-length priors</h3>
+          <div class="survey-chart" id="survey-lengths-panel"><img id="survey-image" src="assets/link-lengths-flow.svg" alt="Seven Gaussian priors fitted to 185 reported link lengths; highlights flow along fixed density curves" width="232" height="208"></div>
+        </figure>
+        <figure class="plot-figure">
+          <h3>Joint distribution</h3>
+          <div class="survey-chart joint-charts" id="survey-joints-panel" role="group" aria-label="Reported arm DoF and joint-limit summary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="176" height="120" preserveAspectRatio="xMidYMid meet" viewBox="0 0 176 120" version="1.0" fill-rule="evenodd" class="bar-chart joint-dof-chart" data-animate-bar-chart="" role="img" aria-labelledby="dof-flow-title" aria-describedby="dof-flow-description">
+  <title id="dof-flow-title">Reported arm degrees of freedom</title>
+  <desc id="dof-flow-description">Five DoF: 3 descriptions (9.1%); six DoF: 21 (63.6%); seven DoF: 9 (27.3%).</desc>
+  <defs>
+    <linearGradient id="dof-flow-gradient-1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0081ED" />
+      <stop offset="100%" stop-color="#0081ED" />
+    </linearGradient>
+    <linearGradient id="dof-flow-gradient-2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3366EE" />
+      <stop offset="100%" stop-color="#3366EE" />
+    </linearGradient>
+    <linearGradient id="dof-flow-gradient-3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8052E6" />
+      <stop offset="100%" stop-color="#8052E6" />
+    </linearGradient>
+  </defs>
+  <style>
+svg.joint-dof-chart .chart-bar {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: dof-flow-rise 7.2s cubic-bezier(.22,.65,.25,1) infinite both;
+  animation-delay: var(--bar-delay, 0s);
+  animation-play-state: paused;
+}
+svg.joint-dof-chart .bar-value {
+  animation: dof-flow-value-fade 7.2s ease infinite both;
+  animation-delay: var(--bar-delay, 0s);
+  animation-play-state: paused;
+}
+svg.joint-dof-chart:root .chart-bar,
+svg.joint-dof-chart:root .bar-value,
+svg.joint-dof-chart.is-visible .chart-bar,
+svg.joint-dof-chart.is-visible .bar-value { animation-play-state: running; }
+@keyframes dof-flow-rise {
+  0% { transform: scaleY(0); opacity: 1; }
+  18%, 80% { transform: scaleY(1); opacity: 1; }
+  92%, 100% { transform: scaleY(1); opacity: 0; }
+}
+@keyframes dof-flow-value-fade {
+  0%, 8% { opacity: 0; }
+  18%, 80% { opacity: 1; }
+  92%, 100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  svg.joint-dof-chart .chart-bar,
+  svg.joint-dof-chart .bar-value {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+</style>
+  <clipPath id="dof-flow-clip">
+    <rect x="0" y="0" width="176" height="226" />
+  </clipPath>
+  <g transform="translate(0,4)">
+    <g id="dof-flow-group" transform="scale(1,-1) translate(0,-226)" style="clip-path: url(#dof-flow-clip)">
+      <g transform="">
+        <text x="20" y="218" style="font-family: Times-Bold; font-size: 9.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,436) scale(1,-1)">Reported arm DoF</text>
+        <path d="M 20,132 L 153,132 Z" style="stroke: rgb(0%,0%,0%); stroke-linecap: butt; stroke-width: 0.6;" />
+        <text x="11.5" y="129.6" style="font-family: Times-Roman; font-size: 7px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,259) scale(1,-1)">0</text>
+        <path d="M 20,150.787879 L 23,150.787879 Z" style="stroke: rgb(85%,85%,85%); stroke-linecap: butt; stroke-width: 0.35;" />
+        <text x="8.0" y="148.38787878787878" style="font-family: Times-Roman; font-size: 7px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,296) scale(1,-1)">10</text>
+        <path d="M 20,169.575758 L 23,169.575758 Z" style="stroke: rgb(85%,85%,85%); stroke-linecap: butt; stroke-width: 0.35;" />
+        <text x="8.0" y="167.17575757575756" style="font-family: Times-Roman; font-size: 7px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,334) scale(1,-1)">20</text>
+        <path d="M 20,188.363636 L 23,188.363636 Z" style="stroke: rgb(85%,85%,85%); stroke-linecap: butt; stroke-width: 0.35;" />
+        <text x="8.0" y="185.96363636363637" style="font-family: Times-Roman; font-size: 7px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,371) scale(1,-1)">30</text>
+        <g class="chart-bar" style="--bar-delay: 0.0s">
+          <rect x="29" y="132" width="22" height="5.636363636363626" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: url(#dof-flow-gradient-1); fill-rule: evenodd;" />
+        </g>
+        <g class="bar-value" style="--bar-delay: 0.0s">
+          <text x="37.875" y="151.63636363636363" style="font-family: Times-Bold; font-size: 8.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,303) scale(1,-1)">3</text>
+          <text x="32.18875" y="141.63636363636363" style="font-family: Times-Roman; font-size: 7.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,283) scale(1,-1)">9.1%</text>
+        </g>
+        <text x="38.0" y="120" style="font-family: Times-Roman; font-size: 8px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,240) scale(1,-1)">5</text>
+        <g class="chart-bar" style="--bar-delay: 0.12s">
+          <rect x="74" y="132" width="22" height="39.45454545454544" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: url(#dof-flow-gradient-2); fill-rule: evenodd;" />
+        </g>
+        <g class="bar-value" style="--bar-delay: 0.12s">
+          <text x="80.75" y="185.45454545454544" style="font-family: Times-Bold; font-size: 8.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,370) scale(1,-1)">21</text>
+          <text x="75.31375" y="175.45454545454544" style="font-family: Times-Roman; font-size: 7.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,350) scale(1,-1)">63.6%</text>
+        </g>
+        <text x="83.0" y="120" style="font-family: Times-Roman; font-size: 8px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,240) scale(1,-1)">6</text>
+        <g class="chart-bar" style="--bar-delay: 0.24s">
+          <rect x="119" y="132" width="22" height="16.909090909090907" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: url(#dof-flow-gradient-3); fill-rule: evenodd;" />
+        </g>
+        <g class="bar-value" style="--bar-delay: 0.24s">
+          <text x="127.875" y="162.9090909090909" style="font-family: Times-Bold; font-size: 8.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,325) scale(1,-1)">9</text>
+          <text x="120.31375" y="152.9090909090909" style="font-family: Times-Roman; font-size: 7.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,305) scale(1,-1)">27.3%</text>
+        </g>
+        <text x="128.0" y="120" style="font-family: Times-Roman; font-size: 8px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,240) scale(1,-1)">7</text>
+      </g>
+    </g>
+  </g>
+</svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="176" height="120" preserveAspectRatio="xMidYMid meet" viewBox="0 0 176 120" version="1.0" fill-rule="evenodd" class="bar-chart joint-limits-chart" data-animate-bar-chart="" role="img" aria-labelledby="limits-flow-title" aria-describedby="limits-flow-description">
+  <title id="limits-flow-title">Joint-limit summary</title>
+  <desc id="limits-flow-description">Bounded: 26 descriptions (78.8%); mixed: 4 (12.1%); unrestricted: 3 (9.1%).</desc>
+  <defs>
+    <linearGradient id="limits-flow-gradient-1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0081ED" />
+      <stop offset="100%" stop-color="#0081ED" />
+    </linearGradient>
+    <linearGradient id="limits-flow-gradient-2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3366EE" />
+      <stop offset="100%" stop-color="#3366EE" />
+    </linearGradient>
+    <linearGradient id="limits-flow-gradient-3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8052E6" />
+      <stop offset="100%" stop-color="#8052E6" />
+    </linearGradient>
+  </defs>
+  <style>
+svg.joint-limits-chart .chart-bar {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: limits-flow-rise 7.2s cubic-bezier(.22,.65,.25,1) infinite both;
+  animation-delay: var(--bar-delay, 0s);
+  animation-play-state: paused;
+}
+svg.joint-limits-chart .bar-value {
+  animation: limits-flow-value-fade 7.2s ease infinite both;
+  animation-delay: var(--bar-delay, 0s);
+  animation-play-state: paused;
+}
+svg.joint-limits-chart:root .chart-bar,
+svg.joint-limits-chart:root .bar-value,
+svg.joint-limits-chart.is-visible .chart-bar,
+svg.joint-limits-chart.is-visible .bar-value { animation-play-state: running; }
+@keyframes limits-flow-rise {
+  0% { transform: scaleY(0); opacity: 1; }
+  18%, 80% { transform: scaleY(1); opacity: 1; }
+  92%, 100% { transform: scaleY(1); opacity: 0; }
+}
+@keyframes limits-flow-value-fade {
+  0%, 8% { opacity: 0; }
+  18%, 80% { opacity: 1; }
+  92%, 100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  svg.joint-limits-chart .chart-bar,
+  svg.joint-limits-chart .bar-value {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+</style>
+  <clipPath id="limits-flow-clip">
+    <rect x="0" y="0" width="176" height="226" />
+  </clipPath>
+  <g transform="translate(0,-101)">
+    <g id="limits-flow-group" transform="scale(1,-1) translate(0,-226)" style="clip-path: url(#limits-flow-clip)">
+      <g transform="">
+        <text x="20" y="113" style="font-family: Times-Bold; font-size: 9.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,226) scale(1,-1)">Joint-limit summary</text>
+        <path d="M 20,27 L 153,27 Z" style="stroke: rgb(0%,0%,0%); stroke-linecap: butt; stroke-width: 0.6;" />
+        <text x="11.5" y="24.6" style="font-family: Times-Roman; font-size: 7px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,49) scale(1,-1)">0</text>
+        <path d="M 20,45.787879 L 23,45.787879 Z" style="stroke: rgb(85%,85%,85%); stroke-linecap: butt; stroke-width: 0.35;" />
+        <text x="8.0" y="43.38787878787879" style="font-family: Times-Roman; font-size: 7px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,86) scale(1,-1)">10</text>
+        <path d="M 20,64.575758 L 23,64.575758 Z" style="stroke: rgb(85%,85%,85%); stroke-linecap: butt; stroke-width: 0.35;" />
+        <text x="8.0" y="62.17575757575758" style="font-family: Times-Roman; font-size: 7px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,124) scale(1,-1)">20</text>
+        <path d="M 20,83.363636 L 23,83.363636 Z" style="stroke: rgb(85%,85%,85%); stroke-linecap: butt; stroke-width: 0.35;" />
+        <text x="8.0" y="80.96363636363637" style="font-family: Times-Roman; font-size: 7px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,161) scale(1,-1)">30</text>
+        <g class="chart-bar" style="--bar-delay: 0.08s">
+          <rect x="29" y="27" width="22" height="48.848484848484844" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: url(#limits-flow-gradient-1); fill-rule: evenodd;" />
+        </g>
+        <g class="bar-value" style="--bar-delay: 0.08s">
+          <text x="35.75" y="89.84848484848484" style="font-family: Times-Bold; font-size: 8.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,179) scale(1,-1)">26</text>
+          <text x="30.31375" y="79.84848484848484" style="font-family: Times-Roman; font-size: 7.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,159) scale(1,-1)">78.8%</text>
+        </g>
+        <text x="25.555999999999997" y="15" style="font-family: Times-Roman; font-size: 8px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,30) scale(1,-1)">Bounded</text>
+        <g class="chart-bar" style="--bar-delay: 0.2s">
+          <rect x="74" y="27" width="22" height="7.515151515151516" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: url(#limits-flow-gradient-2); fill-rule: evenodd;" />
+        </g>
+        <g class="bar-value" style="--bar-delay: 0.2s">
+          <text x="82.875" y="48.515151515151516" style="font-family: Times-Bold; font-size: 8.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,97) scale(1,-1)">4</text>
+          <text x="75.31375" y="38.515151515151516" style="font-family: Times-Roman; font-size: 7.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,77) scale(1,-1)">12.1%</text>
+        </g>
+        <text x="74.556" y="15" style="font-family: Times-Roman; font-size: 8px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,30) scale(1,-1)">Mixed</text>
+        <g class="chart-bar" style="--bar-delay: 0.32s">
+          <rect x="119" y="27" width="22" height="5.63636363636364" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: url(#limits-flow-gradient-3); fill-rule: evenodd;" />
+        </g>
+        <g class="bar-value" style="--bar-delay: 0.32s">
+          <text x="127.875" y="46.63636363636364" style="font-family: Times-Bold; font-size: 8.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,93) scale(1,-1)">3</text>
+          <text x="122.18875" y="36.63636363636364" style="font-family: Times-Roman; font-size: 7.5px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,73) scale(1,-1)">9.1%</text>
+        </g>
+        <text x="110.228" y="15" style="font-family: Times-Roman; font-size: 8px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,30) scale(1,-1)">Unrestricted</text>
+      </g>
+    </g>
+  </g>
+</svg>
+          </div>
+          <figcaption>30 of 33 surveyed descriptions have 6–7 DoF (90.9%).</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="morphgen-video" id="morphgen-video"><h3 id="morphgen-video-title">Generated Morphologies</h3><video class="showcase-video" id="showcase-video" autoplay muted loop playsinline preload="auto" poster="assets/video-poster.webp" width="2820" height="2040" aria-labelledby="morphgen-video-title"><source src="assets/morphgen.webm" type="video/webm"><source src="assets/morphgen.mp4" type="video/mp4">Your browser does not support inline video. <a href="assets/morphgen.mp4">Download the video</a>.</video></div>
   </div></section>
 
   <section class="section shell" id="method">
-    <div class="section-kicker"><span>03</span> METHOD</div>
-    <div class="section-heading"><h2>Learn the body.<br>Predict the action.</h2><p>Three stages connect procedural kinematics to language-conditioned control. Explore the pipeline below.</p></div>
-    <div class="method-tabs" role="tablist" aria-label="Method stages"><button id="tab-generate" role="tab" data-stage="generate" aria-selected="true" aria-controls="method-panel"><span>01</span> Generate</button><button id="tab-tokenize" role="tab" data-stage="tokenize" aria-selected="false" aria-controls="method-panel" tabindex="-1"><span>02</span> Tokenize</button><button id="tab-predict" role="tab" data-stage="predict" aria-selected="false" aria-controls="method-panel" tabindex="-1"><span>03</span> Predict & refine</button></div>
-    <div class="method-panel" id="method-panel" role="tabpanel" aria-labelledby="tab-generate"><div><span class="mini-label" id="method-label">MORPHGEN</span><h3 id="method-title">Scale kinematic supervision.</h3><p id="method-description">Normalize serial-arm chains to a shared local-Z convention, sample new morphologies, and pair configurations with forward-kinematics targets. No manipulation demonstrations are needed for tokenizer pretraining.</p></div><div class="stage-diagram" id="stage-diagram" aria-label="Generation stage"><span>Survey priors</span><b aria-hidden="true">→</b><span>Local-Z arms</span><b aria-hidden="true">→</b><span class="accent">URDF + q + FK</span><small>40M morphology–state pairs</small></div></div>
-    <figure class="architecture-figure"><button class="image-zoom" data-zoom="assets/architecture.webp" data-caption="RoboMorpher: the complete generation, tokenization, and VLA pipeline" aria-label="Enlarge method architecture"><img src="assets/architecture.webp" alt="Full RoboMorpher architecture: MorphGen, morphology-conditioned residual quantization, and discrete-continuous action prediction" loading="lazy" width="2000" height="920"><span class="zoom-tag">↗ EXPAND FIGURE</span></button><figcaption>Joint-aligned morphology features condition the tokenizer and both policy branches. The tokenizer is frozen during policy learning.</figcaption></figure>
-    <div class="method-notes"><div><span class="mini-label">REPRESENTATION</span><h3>Angles and spatial effects.</h3><p>Two discrete indices per valid joint preserve control coordinates alongside child-link position and orientation. Morphology-conditioned decoding allows the same code to represent different joint values on different robots.</p></div><div><span class="mini-label">ACTION PREDICTION</span><h3>Coarse codes. Continuous motion.</h3><p>Ten fitted trajectory nodes become a 50-frame chunk. Eight MaskGIT iterations predict codes; four Euler steps refine the decoded trajectory through a flow-matching branch.</p></div></div>
+    <h2 class="section-kicker"><span>03</span> Method</h2>
+    <figure class="architecture-figure"><button class="image-zoom" data-zoom="assets/architecture.webp" data-caption="RoboMorpher pipeline. (a) MorphGen samples local-Z chains using survey priors and IK filtering. (b) URDF-conditioned tokenization learns two codes per joint with FK supervision. (c) The VLA predicts codes, decodes ten nodes, interpolates 50 frames, and refines them with flow matching. Frozen URDF features condition both DiTs and the decoder; VLM context conditions the DiTs." aria-label="Enlarge method architecture"><img src="assets/architecture.webp" alt="Full RoboMorpher architecture: MorphGen, morphology-conditioned residual quantization, and discrete-continuous action prediction" loading="lazy" width="2000" height="920"><span class="zoom-tag" aria-hidden="true">↗</span></button><figcaption><strong>RoboMorpher pipeline.</strong> (a) MorphGen samples local-<em>Z</em> chains using survey priors and IK filtering. (b) URDF-conditioned tokenization learns two codes per joint with FK supervision. (c) The VLA predicts codes, decodes ten nodes, interpolates 50 frames, and refines them with flow matching. Frozen URDF features condition both DiTs and the decoder; VLM context conditions the DiTs.</figcaption></figure>
   </section>
 
   <section class="section section-tinted" id="embodibench"><div class="shell">
-    <div class="section-kicker"><span>04</span> EMBODIBENCH</div>
-    <div class="section-heading"><h2>A benchmark for<br>different robot bodies.</h2><p>Ten tabletop tasks across 30 generated URDFs in SAPIEN. Single-arm and same-side or opposite-side dual-arm setups test lifting, picking, pushing, and stacking.</p></div>
-    <div class="benchmark-strip"><div><strong>10</strong><span>tasks</span></div><div><strong>30</strong><span>URDFs per task</span></div><div><strong>15,000</strong><span>demonstrations</span></div><div><strong>1,500</strong><span>trials per method</span></div></div>
-    <div class="task-toolbar"><div class="task-filters" role="group" aria-label="Filter benchmark tasks"><button class="selected" data-filter="all" aria-pressed="true">All tasks <span>10</span></button><button data-filter="lift" aria-pressed="false">Lift</button><button data-filter="pick" aria-pressed="false">Pick</button><button data-filter="push" aria-pressed="false">Push</button><button data-filter="stack" aria-pressed="false">Stack</button></div><span class="keyframe-note">SAVED-TRAJECTORY KEYFRAMES</span></div>
+    <h2 class="section-kicker"><span>04</span> Embodibench</h2>
+    <div class="bench-summary"><p>Single- and dual-arm (same-side / opposite-side) manipulation in SAPIEN.</p><div class="benchmark-strip"><div><strong>10</strong><span>tasks</span></div><div><strong>30</strong><span>URDFs per task</span></div><div><strong>15,000</strong><span>demonstrations</span></div></div></div>
     <div class="task-grid" id="task-grid"></div>
-    <p class="fine-print">SS: same-side dual-arm · OS: opposite-side dual-arm. These keyframes illustrate task execution from saved trajectories and are separate from learned-policy evaluation.</p>
   </div></section>
 
   <section class="section shell" id="results">
-    <div class="section-kicker"><span>05</span> RESULTS</div>
-    <div class="section-heading"><h2>Better joint-space control.<br>Across two benchmarks.</h2><p>RoboMorpher achieves the highest mean success among the evaluated joint-space methods. Each benchmark uses 1,500 trials per method.</p></div>
-    <div class="results-highlights"><div><span class="mini-label">ROBOTWIN 2.0</span><strong>56.40<span>%</span></strong><p><b>+9.73 pp</b> over continuous joint control</p></div><div><span class="mini-label">EMBODIBENCH</span><strong>23.27<span>%</span></strong><p><b>+15.34 pp</b> over continuous joint control</p></div></div>
-    <div class="results-card"><div class="results-card-head"><div><h3>Action representation comparison</h3><p>Mean task success rate (%) ↑</p></div><div class="segmented" role="group" aria-label="Results benchmark"><button data-benchmark="robotwin" class="selected" aria-pressed="true">RoboTwin 2.0</button><button data-benchmark="embodi" aria-pressed="false">EmbodiBench</button></div></div><div id="result-bars" class="result-bars" role="img" aria-label="Success rates for joint-space methods on RoboTwin 2.0"></div><div class="table-scroll"><table class="comparison-table"><caption class="sr-only">Mean policy success on RoboTwin 2.0 and EmbodiBench</caption><thead><tr><th scope="col">Method</th><th scope="col">RoboTwin 2.0</th><th scope="col">EmbodiBench</th></tr></thead><tbody id="results-table"></tbody></table></div><p class="chart-note">StarVLA (EE) is a separate end-effector control reference. It achieves higher mean success on both benchmarks; the control interface differs.</p></div>
-    <div class="findings"><article><span>01 / GEOMETRY MATTERS</span><h3>Link-pose supervision makes the difference.</h3><p>Removing link-pose reconstruction drops EmbodiBench success from <strong>23.27% to 5.33%</strong>, a 17.94 percentage-point decrease, despite retaining morphology conditioning.</p><div class="ablation-mini"><div><span>Full model</span><i style="--bar:100%"></i><b>23.27</b></div><div><span>Without link poses</span><i style="--bar:22.9%"></i><b>5.33</b></div></div></article><article><span>02 / WHERE GAINS CONCENTRATE</span><h3>Lifting improves. Stacking remains open.</h3><p>EmbodiBench lifting success averages <strong>55.11%</strong>, versus 14.00% for continuous joint control. The three lifting tasks account for about 80% of the overall improvement.</p><p class="subtle">All three EmbodiBench stacking tasks remain at 0% for RoboMorpher.</p></article></div>
-    <details class="task-results"><summary>Explore per-task results <span aria-hidden="true">+</span></summary><div class="table-scroll" id="task-results-table"></div></details>
-    <div class="scope-note"><span class="mini-label">SCOPE OF THE EVIDENCE</span><p>These experiments do not establish held-out-morphology transfer, empirical scaling trends, or variability across training seeds. Stacking and reconstruction outliers remain unresolved. See the paper for evaluation details and limitations.</p></div>
+    <h2 class="section-kicker"><span>05</span> Results</h2>
+    <div class="results-context"><p>Best mean success among joint-space methods.</p><span>1,500 trials / method / benchmark</span></div>
+    <div class="results-summary">
+      <div class="result-kpi"><h3>RoboTwin 2.0</h3><p class="kpi-score">56.40<span>%</span></p><p class="kpi-gain"><strong>+9.73 pp</strong><span>vs. StarVLA (joint)</span></p></div>
+      <div class="result-kpi"><h3>EmbodiBench</h3><p class="kpi-score">23.27<span>%</span></p><p class="kpi-gain"><strong>+15.34 pp</strong><span>vs. StarVLA (joint)</span></p></div>
+    </div>
+    <div class="results-comparison">
+      <h3 class="comparison-heading">Success rate <span>(%) ↑</span></h3>
+      <div class="table-scroll results-table-frame"><table class="comparison-table result-summary-table"><caption class="sr-only">Mean policy success rate (%) on RoboTwin 2.0 and EmbodiBench</caption><thead><tr><th scope="col">Method</th><th scope="col">RoboTwin 2.0</th><th scope="col">EmbodiBench</th></tr></thead><tbody id="results-reference"></tbody><tbody id="results-table"></tbody></table></div>
+      <div class="results-table-note"><div class="results-key"><span class="key-maximum">Column maximum</span><span class="key-joint">Best joint-space</span></div><span>EE uses a separate control interface.</span></div>
+      <p class="results-error" id="results-error" hidden>See the full results in the <a href="assets/paper.pdf">paper (PDF)</a>.</p>
+    </div>
+    <div class="task-results-block" id="robotwin-per-task"><div class="task-results-heading"><h3 id="robotwin-results-title">RoboTwin 2.0 Results</h3><p>Success rate (%) ↑</p></div><div class="table-scroll results-table-frame" id="robotwin-results-table" tabindex="0" role="region" aria-labelledby="robotwin-results-title"></div></div>
+    <div class="task-results-block" id="embodi-per-task"><div class="task-results-heading"><h3 id="embodi-results-title">EmbodiBench Results</h3><p>Success rate (%) ↑</p></div><div class="setup-legend" id="embodi-setup-legend" role="group" aria-label="Robot configuration legend"></div><div class="table-scroll results-table-frame" id="embodi-results-table" tabindex="0" role="region" aria-labelledby="embodi-results-title" aria-describedby="embodi-setup-legend"></div></div>
   </section>
 
-  <section class="resources" id="resources"><div class="shell"><div class="section-kicker"><span>06</span> RESOURCES</div><div class="resource-row"><div><h2>Explore RoboMorpher.</h2><p>Full method, experiments, and implementation details.</p></div><div class="resource-links"><a href="assets/paper.pdf" target="_blank" rel="noopener"><span>01</span> Paper <b>PDF ↗</b></a><a href="assets/supplement.pdf" target="_blank" rel="noopener"><span>02</span> Supplement <b>PDF ↗</b></a><a href="assets/morphgen.mp4" download><span>03</span> Morphology video <b>MP4 ↓</b></a></div></div></div></section>
+  <section class="citation shell" id="bibtex" aria-labelledby="citation-title">
+    <div class="citation-heading"><h2 id="citation-title">Cite RoboMorpher</h2><button class="copy-citation" id="copy-citation" type="button" aria-label="Copy BibTeX citation"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 7h9v10H7zM12 3H3v10"/></svg><span>Copy</span></button></div>
+    <pre class="citation-code"><code id="bibtex-code">@unpublished{lin_robomorpher,
+  title = {{RoboMorpher: Scaling Robot Morphology Representations for Cross-Embodiment Action Prediction}},
+  author = {Lin, Wenwei and Qin, Yan and Deng, Weiliang and Li, Zixuan and Wang, Kaixuan and Chen, Zanxin and Chen, Yue and Yang, Tianshuo and Chen, Junting and Liang, Zhixuan and Mu, Yao and Lyu, Ximin and Xu, Renjing and Luo, Ping and Chen, Tianxing},
+  note = {Manuscript}
+}</code></pre>
+  </section>
 </main>
-<footer class="shell"><a class="footer-brand" href="#top">RoboMorpher<span>.</span></a><span>Scaling morphology representations for action prediction.</span><a href="#top">Back to top ↑</a></footer>
+<footer class="shell"><a class="footer-brand" href="#top">RoboMorpher<span>.</span></a><a href="#top">Back to top ↑</a></footer>
 <dialog id="image-dialog"><button class="dialog-close" aria-label="Close enlarged figure">✕</button><figure><img id="dialog-image" src="assets/architecture.webp" alt=""><figcaption id="dialog-caption"></figcaption></figure></dialog>
 <div class="sr-only" id="live-status" aria-live="polite"></div>
 </body>
