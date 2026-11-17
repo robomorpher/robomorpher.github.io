@@ -43,18 +43,54 @@ const tasks=[
 ];
 tasks.forEach(([file,title,setup,label])=>{
  const article=document.createElement('article');article.className='task-card';
- const button=document.createElement('button');button.className='image-zoom';button.dataset.zoom='assets/tasks/'+file+'.webp';button.dataset.caption=title+' · '+setup+'. Saved-trajectory keyframe, separate from learned-policy evaluation.';button.setAttribute('aria-label','Enlarge '+title.toLowerCase()+' task, '+setup.toLowerCase());
- const img=document.createElement('img');img.src=button.dataset.zoom;img.alt=title+' task keyframe, '+setup;img.loading='lazy';img.width=640;img.height=480;
+ const button=document.createElement('button');button.className='image-zoom';button.dataset.video='assets/tasks/'+file+'.mp4';button.dataset.poster='assets/tasks/'+file+'.webp';button.dataset.caption=title+' · '+setup+'. Saved-trajectory replay, separate from learned-policy evaluation.';button.setAttribute('aria-label','Enlarge '+title.toLowerCase()+' task video, '+setup.toLowerCase());
+ const video=document.createElement('video');video.className='task-video';video.src=button.dataset.video;video.poster=button.dataset.poster;video.width=640;video.height=480;video.autoplay=true;video.loop=true;video.muted=true;video.defaultMuted=true;video.playsInline=true;video.preload='metadata';video.tabIndex=-1;video.setAttribute('aria-hidden','true');
  const name=document.createElement('span');name.className='task-label';name.textContent=label;
- button.append(img,name);article.append(button);$('#task-grid').append(article);
+ button.append(video,name);article.append(button);$('#task-grid').append(article);
 });
 
 const imageDialog=$('#image-dialog');let lastFigure;
-document.addEventListener('click',e=>{const button=e.target.closest('[data-zoom]');if(!button)return;lastFigure=button;$('#dialog-image').src=button.dataset.zoom;$('#dialog-image').alt=button.dataset.caption;$('#dialog-caption').textContent=button.dataset.caption;imageDialog.showModal();document.body.style.overflow='hidden';});
+const dialogVideo=$('#dialog-video');
+const taskVideos=$$('.task-video');
+const visibleTaskVideos=new Set();
+function updateTaskPlayback(){
+ taskVideos.forEach(video=>{
+  if(visibleTaskVideos.has(video)&&!document.hidden&&!imageDialog.open)video.play().catch(()=>{});
+  else video.pause();
+ });
+}
+const taskVideoObserver=new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{
+  if(entry.isIntersecting)visibleTaskVideos.add(entry.target);
+  else visibleTaskVideos.delete(entry.target);
+ });
+ updateTaskPlayback();
+},{threshold:.05});
+taskVideos.forEach(video=>taskVideoObserver.observe(video));
+document.addEventListener('visibilitychange',()=>{
+ updateTaskPlayback();
+ if(document.hidden)dialogVideo.pause();
+ else if(imageDialog.open&&!dialogVideo.hidden)dialogVideo.play().catch(()=>{});
+});
+document.addEventListener('click',e=>{
+ const button=e.target.closest('[data-zoom],[data-video]');if(!button)return;
+ lastFigure=button;
+ const isVideo=!!button.dataset.video;
+ $('#dialog-image').hidden=isVideo;dialogVideo.hidden=!isVideo;
+ if(isVideo){
+  dialogVideo.src=button.dataset.video;dialogVideo.poster=button.dataset.poster;dialogVideo.muted=true;dialogVideo.defaultMuted=true;
+  dialogVideo.setAttribute('aria-label',button.getAttribute('aria-label'));
+ }else{
+  $('#dialog-image').src=button.dataset.zoom;$('#dialog-image').alt=button.dataset.caption;
+ }
+ $('#dialog-caption').textContent=button.dataset.caption;
+ imageDialog.showModal();document.body.style.overflow='hidden';updateTaskPlayback();
+ if(isVideo)dialogVideo.play().catch(()=>{});
+});
 function closeDialog(){imageDialog.close();}
 $('.dialog-close').addEventListener('click',closeDialog);
 imageDialog.addEventListener('click',e=>{if(e.target===imageDialog){const r=imageDialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeDialog();}});
-imageDialog.addEventListener('close',()=>{document.body.style.overflow='';lastFigure?.focus();});
+imageDialog.addEventListener('close',()=>{dialogVideo.pause();dialogVideo.removeAttribute('src');dialogVideo.load();dialogVideo.hidden=true;document.body.style.overflow='';lastFigure?.focus();updateTaskPlayback();});
 
 const copyCitationButton = $('#copy-citation');
 let copyFeedbackTimer;

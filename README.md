@@ -4,7 +4,7 @@ Project website for **RoboMorpher: Scaling Robot Morphology Representations for 
 
 Website: https://robomorpher.github.io/
 
-The static website includes the manuscript, looping morphology videos, method figures, benchmark keyframes, complete result tables, and a copyable BibTeX citation. Author names and institution logos follow the supplied project author list.
+The static website includes the manuscript, looping morphology and benchmark task videos, method figures, complete result tables, and a copyable BibTeX citation. Author names and institution logos follow the supplied project author list.
 
 ## Development
 
