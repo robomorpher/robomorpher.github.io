@@ -109,8 +109,8 @@ nav a:last-child { border: 0; border-radius: 0; padding: 0; }
 .hero-affiliations {
   --logo-height: 26px;
   display: grid;
-  width: min(100%, 620px);
-  grid-template-columns: 1fr 1.22fr 1.08fr 1fr;
+  width: min(100%, 710px);
+  grid-template-columns: 1.36fr 1.04fr .96fr .96fr 1fr .62fr;
   gap: 12px 16px;
   margin: 0;
   padding: 0;
@@ -144,7 +144,17 @@ nav a:last-child { border: 0; border-radius: 0; padding: 0; }
   filter: grayscale(1) invert(1);
   opacity: .86;
 }
-.hero-affiliations .affiliation-princeton img { filter: grayscale(1); opacity: .75; }
+.hero-author-notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin: 10px 0 0;
+  color: #b4b7c2;
+  font-size: 11px;
+  line-height: 1.45;
+}
+.hero-author-notes > span { white-space: nowrap; }
+.hero-author-notes sup { margin-left: 0; font-size: .9em; }
 .hero-actions { gap: 9px; }
 .hero .button {
   border-radius: 999px;
@@ -212,7 +222,12 @@ nav a:last-child { border: 0; border-radius: 0; padding: 0; }
   .hero .desktop-break { display: none; }
   .hero-credits { margin-bottom: 24px; }
   .hero-authors { font-size: 12px; line-height: 1.85; margin-bottom: 15px; }
-  .hero-affiliations { --logo-height: 25px; gap: 11px 16px; }
+  .hero-affiliations {
+    --logo-height: 25px;
+    width: min(100%, 420px);
+    grid-template-columns: 1.24fr 1fr 1fr;
+    gap: 11px 16px;
+  }
   .hero .button { padding: 12px 16px; font-size: 10px; min-height: 43px; }
   .hero-actions { --hero-button-size: 10px; gap: 9px; max-width: 450px; }
   .hero-media video { transform: scale(1.18); object-position: 67% center; filter: invert(1) grayscale(1) brightness(1.6) contrast(1.05); }
