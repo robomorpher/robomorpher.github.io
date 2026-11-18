@@ -1,31 +1,31 @@
-/* Overview: a compact introduction and a clearly connected learning pipeline. */
+/* Overview: compact editorial intro, metrics, and a connected learning pipeline. */
 #overview {
-  padding-block: 80px 84px;
+  padding-block: 36px 28px;
 }
 
 #overview > .section-kicker {
-  color: var(--accent);
-  font-size: 12px;
-  letter-spacing: .15em;
-  margin-bottom: 25px;
-}
-
-#overview > .section-kicker > span {
-  width: 29px;
-  height: 29px;
-  line-height: 28px;
-  font-size: 11px;
-  border-color: #b8cafa;
+  margin-bottom: 22px;
 }
 
 #overview .intro-grid {
-  gap: 58px;
+  grid-template-columns: .85fr 1.3fr;
+  align-items: start;
+  gap: 40px;
+}
+
+#overview .intro-grid h2 {
+  max-width: 390px;
+  font-size: clamp(30px, 2.6vw, 36px);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -.035em;
+  text-wrap: balance;
 }
 
 #overview .intro-copy p {
-  font-size: 16px;
-  line-height: 1.72;
-  margin-bottom: 15px;
+  font-size: 15px;
+  line-height: 1.65;
+  margin-bottom: 10px;
 }
 
 #overview .intro-copy p:last-child {
@@ -33,22 +33,37 @@
 }
 
 #overview .stats {
-  padding-block: 26px 24px;
-  margin-block: 30px 30px;
+  padding-block: 17px;
+  margin-block: 22px;
+}
+
+#overview .stats > div {
+  padding-inline: 24px;
+}
+
+#overview .stats > div:first-child {
+  padding-left: 0;
+}
+
+#overview .stats strong {
+  display: block;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -.045em;
 }
 
 #overview .stats p {
   margin-top: 7px;
-  font-size: 11px;
+  font-size: 11.5px;
+  line-height: 1.5;
 }
 
 #overview .overview-flow {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 72px minmax(0, 1fr) 72px minmax(0, 1fr);
-  column-gap: 18px;
-  max-width: 930px;
-  margin-inline: auto;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1.08fr) 28px minmax(0, 1fr);
+  gap: 12px;
+  align-items: stretch;
 }
 
 #overview .flow-stage {
@@ -58,59 +73,62 @@
 }
 
 #overview .flow-block {
-  height: 92px;
-  min-height: 92px;
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  background: var(--accent);
-  color: #fff;
-  border: 1px solid #2e60e6;
-  border-radius: 14px;
-  box-shadow: inset 0 1px 0 #ffffff29, 0 8px 20px #3366ee12;
-  text-align: center;
+  height: 100%;
+  padding: 18px 20px;
+  background: #f7f9fd;
+  border: 1px solid #e2e8f3;
+  border-radius: 12px;
 }
 
 #overview .flow-block .step-index {
-  color: #e2eaff;
-  font-size: 8px;
+  color: var(--accent);
+  font-size: 9px;
   line-height: 1.4;
-  letter-spacing: .15em;
-  font-weight: 500;
-  margin: 0;
+  letter-spacing: .12em;
+  font-weight: 650;
+  margin: 0 0 10px;
 }
 
 #overview .flow-block h3 {
-  color: #fff;
+  color: var(--ink);
   font-size: 18px;
-  font-weight: 550;
+  font-weight: 600;
   line-height: 1.3;
-  letter-spacing: -.015em;
+  letter-spacing: -.02em;
   margin: 0;
 }
 
-#overview .flow-stage > p {
+#overview .flow-block p {
   color: var(--muted);
-  font-size: 13px;
-  line-height: 1.7;
-  text-align: center;
-  margin: 14px 0 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  margin: 8px 0 0;
+  text-wrap: pretty;
+}
+
+#overview .flow-stage-featured .flow-block {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+#overview .flow-stage-featured h3 {
+  color: #fff;
+}
+
+#overview .flow-stage-featured .step-index,
+#overview .flow-stage-featured p {
+  color: #e7eeff;
 }
 
 #overview .flow-arrow {
   display: grid;
   place-items: center;
-  align-self: start;
-  height: 92px;
   color: var(--accent);
 }
 
 #overview .flow-arrow svg {
-  width: 44px;
-  height: 22px;
+  width: 28px;
+  height: 24px;
   overflow: hidden;
 }
 
@@ -120,13 +138,13 @@
 }
 
 #overview .flow-arrow-track {
-  stroke: #b6c8f4;
-  stroke-width: 1.6;
+  stroke: #a5baec;
+  stroke-width: 2;
 }
 
 #overview .flow-arrow-pulse {
   stroke: var(--accent);
-  stroke-width: 2.4;
+  stroke-width: 2.8;
   animation: overview-flow-forward 2.4s cubic-bezier(.36, .05, .64, .95) infinite;
 }
 
@@ -142,26 +160,40 @@
 }
 
 @media (max-width: 1100px) {
-  #overview .intro-grid { gap: 40px; }
-  #overview .overview-flow { grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr) 64px minmax(0, 1fr); column-gap: 14px; }
-  #overview .flow-arrow svg { width: 34px; }
-  #overview .flow-block { padding-inline: 12px; }
-  #overview .flow-block h3 { font-size: 16.5px; }
-  #overview .flow-stage > p { font-size: 12.5px; }
+  #overview .intro-grid { gap: 28px; }
+  #overview .overview-flow { column-gap: 8px; grid-template-columns: minmax(0, 1fr) 22px minmax(0, 1.08fr) 22px minmax(0, 1fr); }
+  #overview .flow-block { padding: 16px; }
+  #overview .flow-block h3 { font-size: 17px; }
+  #overview .flow-arrow svg { width: 22px; }
 }
 
 @media (max-width: 800px) {
-  #overview { padding-block: 62px 66px; }
-  #overview > .section-kicker { margin-bottom: 21px; }
-  #overview .intro-grid { gap: 20px; }
-  #overview .intro-copy p { font-size: 15.5px; }
-  #overview .stats { margin-block: 22px 24px; padding-block: 22px; row-gap: 22px; }
+  #overview { padding-block: 28px 24px; }
+  #overview > .section-kicker { margin-bottom: 18px; }
+  #overview .intro-grid { grid-template-columns: 1fr; gap: 16px; }
+  #overview .intro-grid h2 { max-width: 580px; font-size: 32px; text-wrap: initial; }
+  #overview .intro-copy p { font-size: 14px; }
+  #overview .stats { margin-block: 20px; padding-block: 16px; row-gap: 18px; }
+  #overview .stats > div { padding-inline: 18px; }
+  #overview .stats > div:nth-child(odd) { padding-left: 0; }
+  #overview .stats strong { font-size: 28px; }
+}
+
+@media (max-width: 640px) {
+  #overview .intro-grid h2 { max-width: 340px; font-size: 30px; text-wrap: balance; }
   #overview .overview-flow { grid-template-columns: 1fr; gap: 0; }
-  #overview .flow-block { width: 100%; max-width: 300px; margin-inline: auto; }
+  #overview .flow-block { padding: 16px 18px; }
+  #overview .flow-block .step-index { margin-bottom: 6px; }
   #overview .flow-block h3 { font-size: 18px; }
-  #overview .flow-stage > p { max-width: 310px; margin: 14px auto 0; text-align: center; font-size: 13px; }
-  #overview .flow-arrow { height: 64px; justify-self: center; width: 72px; }
-  #overview .flow-arrow svg { width: 34px; height: 22px; transform: rotate(90deg); }
+  #overview .flow-block p { font-size: 13px; margin-top: 6px; }
+  #overview .flow-arrow { height: 24px; }
+  #overview .flow-arrow svg { width: 22px; height: 16px; transform: rotate(90deg); }
+}
+
+@media (max-width: 360px) {
+  #overview .stats > div { padding-right: 8px; padding-left: 12px; }
+  #overview .stats strong { font-size: 25px; }
+  #overview .stats p { font-size: 11px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

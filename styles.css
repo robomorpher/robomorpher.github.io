@@ -15,3 +15,8 @@ dialog{border:0;border-radius:12px;padding:48px 24px 24px;max-width:96vw;max-hei
 @media(max-width:480px){.shell{width:calc(100% - 48px)}}
 @media(max-width:400px){.hero{min-height:690px}.hero h1{font-size:11vw}.hero-title{font-size:23px}.hero-actions .button{padding:10px 13px}.hero-actions .button:last-child{font-size:10px}.results-highlights strong{font-size:42px}.task-card-text>span{display:none}.bar-row{grid-template-columns:99px 1fr 36px}.small-stats{gap:25px}h2{font-size:34px}.hero-bottom .motion-control{font-size:8px}.benchmark-strip strong{font-size:26px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.hero-media video{display:none}.hero-media{background:url('assets/video-poster.webp') center/cover}}
+
+/* Articulated arm symbol, shared across navigation and footer. */
+.wordmark, .footer-brand { display:inline-flex; align-items:center; gap:9px; letter-spacing:-.035em; }
+.wordmark .brand-symbol, .footer-brand .brand-symbol { width:32px; height:32px; flex:none; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.footer-brand .brand-name { color:var(--ink); }

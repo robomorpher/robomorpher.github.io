@@ -1,0 +1,224 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000.0 920.0" role="img" aria-labelledby="title"><title id="title">RoboMorpher architecture: MorphGen, tokenizer pretraining, and morphology-aware action prediction</title><rect width="100%" height="100%" fill="white"/>
+<style>.signal{stroke-dasharray:7 25;animation:flow 2.8s linear infinite}@keyframes flow{to{stroke-dashoffset:-64}}@media(prefers-reduced-motion:reduce){.signal{display:none}}</style>
+<rect x="24.0" y="7.0" width="370.0" height="52.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="24.0" y="33.0" dominant-baseline="central" text-anchor="start" font-family="Arial, sans-serif" font-size="36.0" font-weight="700" fill="#252B48">(a) MorphGen</text>
+<rect x="460.0" y="7.0" width="500.0" height="52.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="460.0" y="33.0" dominant-baseline="central" text-anchor="start" font-family="Arial, sans-serif" font-size="36.0" font-weight="700" fill="#252B48">(b) RoboMorpher</text>
+<rect x="970.0" y="12.0" width="1002.0" height="42.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1972.0" y="33.0" dominant-baseline="central" text-anchor="end" font-family="Arial, sans-serif" font-size="29.0" font-weight="400" fill="#78839A">Morphology-conditioned tokenizer pretraining</text>
+<rect x="409.0" y="76.0" width="2.0" height="372.0" rx="0" fill="#D8DEED" stroke="none" stroke-width="0.0"/>
+<rect x="24.0" y="83.0" width="340.0" height="84.0" rx="11" fill="#F7F4FE" stroke="#DDD4F0" stroke-width="1.2"/>
+<rect x="34.0" y="93.0" width="320.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="194.0" y="112.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="26.0" font-weight="700" fill="#8054E8">Robot-description survey</text>
+<rect x="34.0" y="132.0" width="320.0" height="29.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="194.0" y="146.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#8054E8">33 descriptions / 30 names</text>
+<rect x="24.0" y="212.0" width="340.0" height="84.0" rx="11" fill="#7850D5" stroke="#7148CB" stroke-width="1.0"/>
+<rect x="34.0" y="222.0" width="320.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="194.0" y="241.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="28.0" font-weight="700" fill="#FFFFFF">Sample local-Z chains</text>
+<rect x="34.0" y="261.0" width="320.0" height="29.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="194.0" y="275.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#FFFFFF">Survey-derived length priors</text>
+<rect x="24.0" y="298.0" width="340.0" height="32.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="194.0" y="314.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#78839A">6–7 revolute joints</text>
+<rect x="24.0" y="361.0" width="340.0" height="60.0" rx="11" fill="#F7F4FE" stroke="#DDD4F0" stroke-width="1.2"/>
+<rect x="34.0" y="364.0" width="320.0" height="54.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="194.0" y="391.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="27.0" font-weight="700" fill="#8054E8">Home-pose IK + filtering</text>
+<rect x="24.0" y="462.0" width="340.0" height="60.0" rx="11" fill="#F7F4FE" stroke="#DDD4F0" stroke-width="1.2"/>
+<rect x="34.0" y="465.0" width="320.0" height="54.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="194.0" y="492.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="27.0" font-weight="700" fill="#8054E8">URDF + q + FK targets</text>
+<rect x="460.0" y="83.0" width="370.0" height="34.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="460.0" y="100.0" dominant-baseline="central" text-anchor="start" font-family="Arial, sans-serif" font-size="26.0" font-weight="400" fill="#78839A">Normalized origins: xyz + rpy</text>
+<rect x="460.0" y="130.0" width="270.0" height="65.0" rx="11" fill="#F7F4FE" stroke="#DDD4F0" stroke-width="1.2"/>
+<rect x="470.0" y="133.0" width="250.0" height="59.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="595.0" y="162.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="28.0" font-weight="700" fill="#8054E8">URDF encoder × 2</text>
+<rect x="730.0" y="161.0" width="810.0" height="3.0" rx="0" fill="#8054E8" stroke="none" stroke-width="0.0"/>
+<rect x="826.0" y="111.0" width="1035.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1343.5" y="130.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="29.0" font-weight="700" fill="#8054E8">Joint-aligned morphology features / AdaLN-Zero</text>
+<rect x="460.0" y="233.0" width="270.0" height="35.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="595.0" y="250.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="28.0" font-weight="700" fill="#252B48">Joint angles q</text>
+<rect x="460.0" y="280.0" width="270.0" height="82.0" rx="11" fill="#F3F6FF" stroke="#D4DEEE" stroke-width="1.2"/>
+<rect x="470.0" y="283.0" width="250.0" height="76.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="595.0" y="321.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="28.0" font-weight="700" fill="#326DF3">Angle encoder × 2</text>
+<rect x="790.0" y="280.0" width="240.0" height="82.0" rx="11" fill="#3264DC" stroke="#2E5DCD" stroke-width="1.0"/>
+<rect x="800.0" y="290.0" width="220.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="910.0" y="309.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="29.0" font-weight="700" fill="#FFFFFF">Conditional</text>
+<rect x="800.0" y="329.0" width="220.0" height="27.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="910.0" y="342.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#FFFFFF">encoder × 6</text>
+<rect x="1110.0" y="280.0" width="230.0" height="82.0" rx="11" fill="#7850D5" stroke="#7148CB" stroke-width="1.0"/>
+<rect x="1120.0" y="290.0" width="210.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1225.0" y="309.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="30.0" font-weight="700" fill="#FFFFFF">Residual VQ</text>
+<rect x="1120.0" y="329.0" width="210.0" height="27.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1225.0" y="342.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#FFFFFF">256D latent</text>
+<rect x="1420.0" y="280.0" width="240.0" height="82.0" rx="11" fill="#3264DC" stroke="#2E5DCD" stroke-width="1.0"/>
+<rect x="1430.0" y="290.0" width="220.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1540.0" y="309.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="29.0" font-weight="700" fill="#FFFFFF">Conditional</text>
+<rect x="1430.0" y="329.0" width="220.0" height="27.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1540.0" y="342.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#FFFFFF">decoder × 4</text>
+<rect x="1148.0" y="379.0" width="17.0" height="17.0" rx="11" fill="#8054E8" stroke="#8054E8" stroke-width="1.8"/>
+<rect x="1171.0" y="379.0" width="17.0" height="17.0" rx="11" fill="#8054E8" stroke="#8054E8" stroke-width="1.8"/>
+<rect x="1194.0" y="379.0" width="17.0" height="17.0" rx="11" fill="#8054E8" stroke="#8054E8" stroke-width="1.8"/>
+<rect x="1217.0" y="379.0" width="17.0" height="17.0" rx="11" fill="#8054E8" stroke="#8054E8" stroke-width="1.8"/>
+<rect x="1240.0" y="379.0" width="17.0" height="17.0" rx="11" fill="#8054E8" stroke="#8054E8" stroke-width="1.8"/>
+<rect x="1263.0" y="379.0" width="17.0" height="17.0" rx="11" fill="#8054E8" stroke="#8054E8" stroke-width="1.8"/>
+<rect x="1286.0" y="379.0" width="17.0" height="17.0" rx="11" fill="#8054E8" stroke="#8054E8" stroke-width="1.8"/>
+<rect x="1148.0" y="402.0" width="17.0" height="17.0" rx="11" fill="#B6A0F3" stroke="#B6A0F3" stroke-width="1.8"/>
+<rect x="1171.0" y="402.0" width="17.0" height="17.0" rx="11" fill="#B6A0F3" stroke="#B6A0F3" stroke-width="1.8"/>
+<rect x="1194.0" y="402.0" width="17.0" height="17.0" rx="11" fill="#B6A0F3" stroke="#B6A0F3" stroke-width="1.8"/>
+<rect x="1217.0" y="402.0" width="17.0" height="17.0" rx="11" fill="#B6A0F3" stroke="#B6A0F3" stroke-width="1.8"/>
+<rect x="1240.0" y="402.0" width="17.0" height="17.0" rx="11" fill="#B6A0F3" stroke="#B6A0F3" stroke-width="1.8"/>
+<rect x="1263.0" y="402.0" width="17.0" height="17.0" rx="11" fill="#B6A0F3" stroke="#B6A0F3" stroke-width="1.8"/>
+<rect x="1286.0" y="402.0" width="17.0" height="17.0" rx="11" fill="#B6A0F3" stroke="#B6A0F3" stroke-width="1.8"/>
+<rect x="1085.0" y="425.0" width="280.0" height="30.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1225.0" y="440.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="26.0" font-weight="700" fill="#8054E8">2 × 2048 codebooks</text>
+<rect x="1085.0" y="237.0" width="280.0" height="34.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1225.0" y="254.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#8054E8">2 IDs per valid joint</text>
+<rect x="1740.0" y="196.0" width="236.0" height="36.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1858.0" y="214.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="28.0" font-weight="700" fill="#252B48">Reconstruction</text>
+<rect x="1740.0" y="242.0" width="236.0" height="158.0" rx="11" fill="#FAFBFE" stroke="#D4DEEE" stroke-width="1.2"/>
+<rect x="1752.0" y="249.0" width="212.0" height="42.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1858.0" y="270.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="28.0" font-weight="700" fill="#326DF3">Angle (1D)</text>
+<rect x="1758.0" y="294.2499737532808" width="200.0" height="1.5000524934383201" rx="0" fill="#D8DEED" stroke="none" stroke-width="0.0"/>
+<rect x="1752.0" y="301.0" width="212.0" height="40.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1858.0" y="321.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="27.0" font-weight="400" fill="#8054E8">Position (3D)</text>
+<rect x="1752.0" y="347.0" width="212.0" height="40.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1858.0" y="367.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="27.0" font-weight="400" fill="#8054E8">Rotation (6D)</text>
+<rect x="487.0" y="404.5000524934383" width="28.0" height="3.0" rx="0" fill="#B6A0F3" stroke="none" stroke-width="0.0"/>
+<rect x="470.0" y="397.0" width="18.0" height="18.0" rx="11" fill="#B6A0F3" stroke="#B6A0F3" stroke-width="1.8"/>
+<rect x="530.0" y="404.5000524934383" width="28.0" height="3.0" rx="0" fill="#B6A0F3" stroke="none" stroke-width="0.0"/>
+<rect x="513.0" y="397.0" width="18.0" height="18.0" rx="11" fill="#B6A0F3" stroke="#B6A0F3" stroke-width="1.8"/>
+<rect x="573.0" y="404.5000524934383" width="28.0" height="3.0" rx="0" fill="#B6A0F3" stroke="none" stroke-width="0.0"/>
+<rect x="556.0" y="397.0" width="18.0" height="18.0" rx="11" fill="#B6A0F3" stroke="#B6A0F3" stroke-width="1.8"/>
+<rect x="616.0" y="404.5000524934383" width="28.0" height="3.0" rx="0" fill="#B6A0F3" stroke="none" stroke-width="0.0"/>
+<rect x="599.0" y="397.0" width="18.0" height="18.0" rx="11" fill="#B6A0F3" stroke="#B6A0F3" stroke-width="1.8"/>
+<rect x="642.0" y="397.0" width="18.0" height="18.0" rx="11" fill="#B6A0F3" stroke="#B6A0F3" stroke-width="1.8"/>
+<rect x="704.0" y="387.0" width="395.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="704.0" y="406.0" dominant-baseline="central" text-anchor="start" font-family="Arial, sans-serif" font-size="26.0" font-weight="400" fill="#78839A">Graph-biased attention</text>
+<rect x="460.0" y="425.0" width="615.0" height="30.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="460.0" y="440.0" dominant-baseline="central" text-anchor="start" font-family="Arial, sans-serif" font-size="26.0" font-weight="400" fill="#78839A">Chain distance / upstream / downstream</text>
+<rect x="460.0" y="462.0" width="1516.0" height="60.0" rx="11" fill="#F8F9FC" stroke="#DEDFF0" stroke-width="1.0"/>
+<rect x="474.0" y="473.0" width="375.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="474.0" y="492.0" dominant-baseline="central" text-anchor="start" font-family="Arial, sans-serif" font-size="27.0" font-weight="700" fill="#8054E8">40M training examples</text>
+<rect x="865.0" y="473.0" width="1092.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1957.0" y="492.0" dominant-baseline="central" text-anchor="end" font-family="Arial, sans-serif" font-size="27.0" font-weight="400" fill="#252B48">Supervision: angles + FK position/orientation + RVQ loss</text>
+<rect x="24.0" y="550.0" width="1952.0" height="2.0" rx="0" fill="#D8DEED" stroke="none" stroke-width="0.0"/>
+<rect x="24.0" y="561.0" width="1005.0" height="48.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="24.0" y="585.0" dominant-baseline="central" text-anchor="start" font-family="Arial, sans-serif" font-size="35.0" font-weight="700" fill="#252B48">(c) Morphology-aware action prediction</text>
+<rect x="1140.0" y="566.0" width="836.0" height="44.0" rx="11" fill="#F6F3FD" stroke="#DEDFF0" stroke-width="1.0"/>
+<rect x="1150.0" y="568.0" width="816.0" height="40.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1558.0" y="588.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="27.0" font-weight="700" fill="#8054E8">Frozen URDF encoder / joint-wise morphology features</text>
+<rect x="24.0" y="630.0" width="310.0" height="35.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="179.0" y="647.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="700" fill="#252B48">3 RGB views + instruction</text>
+<rect x="24.0" y="665.0" width="310.0" height="32.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="179.0" y="681.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#78839A">+ current state</text>
+<rect x="24.0" y="714.0" width="310.0" height="88.0" rx="11" fill="#7850D5" stroke="#7148CB" stroke-width="1.0"/>
+<rect x="34.0" y="724.0" width="290.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="179.0" y="743.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="30.0" font-weight="700" fill="#FFFFFF">Qwen3-VL-4B</text>
+<rect x="34.0" y="763.0" width="290.0" height="33.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="179.0" y="779.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#FFFFFF">Trainable VLM</text>
+<rect x="334.0" y="756.5000524934384" width="31.0" height="3.0" rx="0" fill="#8054E8" stroke="none" stroke-width="0.0"/>
+<rect x="363.5000524934383" y="650.0" width="3.0" height="108.0" rx="0" fill="#8054E8" stroke="none" stroke-width="0.0"/>
+<rect x="365.0" y="648.5000524934384" width="1140.0" height="3.0" rx="0" fill="#8054E8" stroke="none" stroke-width="0.0"/>
+<rect x="615.0" y="612.0" width="640.0" height="36.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="935.0" y="630.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="27.0" font-weight="400" fill="#8054E8">Layer-wise VLM context</text>
+<rect x="1556.5000524934383" y="610.0" width="3.0" height="69.0" rx="0" fill="#B6A0F3" stroke="none" stroke-width="0.0"/>
+<rect x="580.0" y="677.5000524934384" width="978.0" height="3.0" rx="0" fill="#B6A0F3" stroke="none" stroke-width="0.0"/>
+<rect x="410.0" y="714.0" width="270.0" height="88.0" rx="11" fill="#3264DC" stroke="#2E5DCD" stroke-width="1.0"/>
+<rect x="420.0" y="724.0" width="250.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="545.0" y="743.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="31.0" font-weight="700" fill="#FFFFFF">Discrete DiT</text>
+<rect x="420.0" y="763.0" width="250.0" height="33.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="545.0" y="779.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#FFFFFF">8 MaskGIT iterations</text>
+<rect x="750.0" y="714.0" width="250.0" height="88.0" rx="11" fill="#F7F4FE" stroke="#DDD4F0" stroke-width="1.2"/>
+<rect x="760.0" y="724.0" width="230.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="875.0" y="743.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="29.0" font-weight="700" fill="#8054E8">Frozen decoder</text>
+<rect x="760.0" y="763.0" width="230.0" height="33.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="875.0" y="779.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#8054E8">10 → 50 frames</text>
+<rect x="1070.0" y="714.0" width="230.0" height="88.0" rx="11" fill="#F3F6FF" stroke="#D4DEEE" stroke-width="1.2"/>
+<rect x="1080.0" y="724.0" width="210.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1185.0" y="743.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="29.0" font-weight="700" fill="#326DF3">Coarse + noise</text>
+<rect x="1080.0" y="763.0" width="210.0" height="33.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1185.0" y="779.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#326DF3">0.3 aᵈ + 0.7 ε</text>
+<rect x="1370.0" y="714.0" width="270.0" height="88.0" rx="11" fill="#3264DC" stroke="#2E5DCD" stroke-width="1.0"/>
+<rect x="1380.0" y="724.0" width="250.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1505.0" y="743.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="30.0" font-weight="700" fill="#FFFFFF">Continuous DiT</text>
+<rect x="1380.0" y="763.0" width="250.0" height="33.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1505.0" y="779.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#FFFFFF">4 Euler steps</text>
+<rect x="1710.0" y="714.0" width="266.0" height="88.0" rx="11" fill="#F3F6FF" stroke="#D4DEEE" stroke-width="1.2"/>
+<rect x="1720.0" y="724.0" width="246.0" height="38.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1843.0" y="743.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="31.0" font-weight="700" fill="#326DF3">Joint actions</text>
+<rect x="1720.0" y="763.0" width="246.0" height="33.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1843.0" y="779.5" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#326DF3">50-frame chunk</text>
+<rect x="410.0" y="815.0" width="270.0" height="34.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="545.0" y="832.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#326DF3">Predicted action IDs</text>
+<rect x="750.0" y="815.0" width="250.0" height="34.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="875.0" y="832.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#8054E8">Coarse trajectory aᵈ</text>
+<rect x="1070.0" y="815.0" width="230.0" height="34.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1185.0" y="832.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#78839A">Refinement source</text>
+<rect x="1370.0" y="815.0" width="270.0" height="34.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1505.0" y="832.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#326DF3">Flow refinement</text>
+<rect x="1710.0" y="815.0" width="266.0" height="34.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1843.0" y="832.0" dominant-baseline="central" text-anchor="middle" font-family="Arial, sans-serif" font-size="25.0" font-weight="400" fill="#78839A">Valid joints + grippers</text>
+<rect x="24.0" y="866.2499737532809" width="1952.0" height="1.5000524934383201" rx="0" fill="#D8DEED" stroke="none" stroke-width="0.0"/>
+<rect x="24.0" y="875.0" width="1420.0" height="36.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="24.0" y="893.0" dominant-baseline="central" text-anchor="start" font-family="Arial, sans-serif" font-size="27.0" font-weight="400" fill="#252B48">Discrete / continuous DiTs: first 2 blocks share weights; remaining blocks are separate</text>
+<rect x="1533.0" y="875.0" width="443.0" height="36.0" rx="0" fill="none" stroke="none" stroke-width="0.0"/>
+<text x="1976.0" y="893.0" dominant-baseline="central" text-anchor="end" font-family="Arial, sans-serif" font-size="28.0" font-weight="700" fill="#252B48">Loss: 0.5 CE + FM</text>
+<defs><marker id="m108" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8054E8"/></marker></defs>
+<path d="M194.0 171.0L194.0 201.0" stroke="#8054E8" stroke-width="3.0" marker-end="url(#m108)"/>
+<path class="signal" style="animation-delay:-1.2000000000000002s" d="M194.0 171.0L194.0 201.0" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m109" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8054E8"/></marker></defs>
+<path d="M194.0 332.0L194.0 350.0" stroke="#8054E8" stroke-width="3.0" marker-end="url(#m109)"/>
+<path class="signal" style="animation-delay:-1.6s" d="M194.0 332.0L194.0 350.0" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m110" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8054E8"/></marker></defs>
+<path d="M194.0 425.0L194.0 451.0" stroke="#8054E8" stroke-width="3.0" marker-end="url(#m110)"/>
+<path class="signal" style="animation-delay:-2.0s" d="M194.0 425.0L194.0 451.0" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m111" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8054E8"/></marker></defs>
+<path d="M910.0 162.50005249343832L910.0 270.00010498687664" stroke="#8054E8" stroke-width="3.0" marker-end="url(#m111)"/>
+<path class="signal" style="animation-delay:-2.4000000000000004s" d="M910.0 162.50005249343832L910.0 270.00010498687664" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m112" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8054E8"/></marker></defs>
+<path d="M1540.0 162.50005249343832L1540.0 270.00010498687664" stroke="#8054E8" stroke-width="3.0" marker-end="url(#m112)"/>
+<path class="signal" style="animation-delay:-0.0s" d="M1540.0 162.50005249343832L1540.0 270.00010498687664" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m113" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#326DF3"/></marker></defs>
+<path d="M730.0 321.0L780.0 321.10005249343834" stroke="#326DF3" stroke-width="3.0" marker-end="url(#m113)"/>
+<path class="signal" style="animation-delay:-0.4s" d="M730.0 321.0L780.0 321.10005249343834" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m114" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#326DF3"/></marker></defs>
+<path d="M1030.0 321.0L1100.0 321.10005249343834" stroke="#326DF3" stroke-width="3.0" marker-end="url(#m114)"/>
+<path class="signal" style="animation-delay:-0.8s" d="M1030.0 321.0L1100.0 321.10005249343834" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m115" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#326DF3"/></marker></defs>
+<path d="M1340.0 321.0L1410.0 321.10005249343834" stroke="#326DF3" stroke-width="3.0" marker-end="url(#m115)"/>
+<path class="signal" style="animation-delay:-1.2000000000000002s" d="M1340.0 321.0L1410.0 321.10005249343834" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m116" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#326DF3"/></marker></defs>
+<path d="M1660.0 321.0L1730.0 321.10005249343834" stroke="#326DF3" stroke-width="3.0" marker-end="url(#m116)"/>
+<path class="signal" style="animation-delay:-1.6s" d="M1660.0 321.0L1730.0 321.10005249343834" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m117" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8054E8"/></marker></defs>
+<path d="M364.0 492.0L450.0 492.10005249343834" stroke="#8054E8" stroke-width="3.0" marker-end="url(#m117)"/>
+<path class="signal" style="animation-delay:-2.0s" d="M364.0 492.0L450.0 492.10005249343834" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m118" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8054E8"/></marker></defs>
+<path d="M1858.0 404.0L1858.0 452.0" stroke="#8054E8" stroke-width="3.0" marker-end="url(#m118)"/>
+<path class="signal" style="animation-delay:-2.4000000000000004s" d="M1858.0 404.0L1858.0 452.0" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m119" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8054E8"/></marker></defs>
+<path d="M545.0 650.0L545.0 704.0" stroke="#8054E8" stroke-width="3.0" marker-end="url(#m119)"/>
+<path class="signal" style="animation-delay:-0.0s" d="M545.0 650.0L545.0 704.0" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m120" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8054E8"/></marker></defs>
+<path d="M1505.0 650.0L1505.0 704.0" stroke="#8054E8" stroke-width="3.0" marker-end="url(#m120)"/>
+<path class="signal" style="animation-delay:-0.4s" d="M1505.0 650.0L1505.0 704.0" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m121" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#B6A0F3"/></marker></defs>
+<path d="M580.0 679.0L580.0 704.0" stroke="#B6A0F3" stroke-width="3.0" marker-end="url(#m121)"/>
+<path class="signal" style="animation-delay:-0.8s" d="M580.0 679.0L580.0 704.0" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m122" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#B6A0F3"/></marker></defs>
+<path d="M875.0 679.0L875.0 704.0" stroke="#B6A0F3" stroke-width="3.0" marker-end="url(#m122)"/>
+<path class="signal" style="animation-delay:-1.2000000000000002s" d="M875.0 679.0L875.0 704.0" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m123" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#B6A0F3"/></marker></defs>
+<path d="M1540.0 679.0L1540.0 704.0" stroke="#B6A0F3" stroke-width="3.0" marker-end="url(#m123)"/>
+<path class="signal" style="animation-delay:-1.6s" d="M1540.0 679.0L1540.0 704.0" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m124" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#326DF3"/></marker></defs>
+<path d="M680.0 758.0L740.0 758.1000524934383" stroke="#326DF3" stroke-width="3.0" marker-end="url(#m124)"/>
+<path class="signal" style="animation-delay:-2.0s" d="M680.0 758.0L740.0 758.1000524934383" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m125" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#8054E8"/></marker></defs>
+<path d="M1000.0 758.0L1060.0 758.1000524934383" stroke="#8054E8" stroke-width="3.0" marker-end="url(#m125)"/>
+<path class="signal" style="animation-delay:-2.4000000000000004s" d="M1000.0 758.0L1060.0 758.1000524934383" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m126" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#326DF3"/></marker></defs>
+<path d="M1300.0 758.0L1360.0 758.1000524934383" stroke="#326DF3" stroke-width="3.0" marker-end="url(#m126)"/>
+<path class="signal" style="animation-delay:-0.0s" d="M1300.0 758.0L1360.0 758.1000524934383" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+<defs><marker id="m127" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#326DF3"/></marker></defs>
+<path d="M1640.0 758.0L1700.0 758.1000524934383" stroke="#326DF3" stroke-width="3.0" marker-end="url(#m127)"/>
+<path class="signal" style="animation-delay:-0.4s" d="M1640.0 758.0L1700.0 758.1000524934383" stroke="#b7cdff" stroke-width="1.9500000000000002"/>
+</svg>
