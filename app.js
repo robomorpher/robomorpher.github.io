@@ -18,12 +18,28 @@ const heroVideo = $('#hero-video');
 const motionButton = $('#motion-control');
 let manuallyPaused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 function motionUI() {motionButton.setAttribute('aria-pressed', String(manuallyPaused)); motionButton.innerHTML = manuallyPaused ? '<span aria-hidden="true">▶</span> Play background' : '<span aria-hidden="true">Ⅱ</span> Pause background';}
-if(manuallyPaused) heroVideo.pause();
+let heroVisible = false;
+let heroReady = false;
+function updateHeroPlayback(){
+ if(!heroReady||!heroVisible||manuallyPaused||document.hidden){heroVideo.pause();return;}
+ if(!heroVideo.getAttribute('src')){
+  heroVideo.src=window.matchMedia('(max-width: 800px)').matches?'assets/hero-mobile.mp4':'assets/hero-desktop.mp4';
+ }
+ heroVideo.play().catch(()=>{});
+}
 motionUI();
-motionButton.addEventListener('click', () => {manuallyPaused = !manuallyPaused; if(manuallyPaused) heroVideo.pause(); else heroVideo.play().catch(() => {live.textContent='Background video is unavailable in this browser. The poster is shown.';}); motionUI();});
-let heroVisible = true;
-const heroObserver = new IntersectionObserver(entries => {for(const entry of entries){heroVisible=entry.isIntersecting;if(!heroVisible||document.hidden)heroVideo.pause();else if(!manuallyPaused)heroVideo.play().catch(()=>{});}}, {threshold:.05});
+motionButton.addEventListener('click',()=>{manuallyPaused=!manuallyPaused;heroReady=true;motionUI();updateHeroPlayback();});
+const heroObserver=new IntersectionObserver(entries=>{
+ heroVisible=entries[0].isIntersecting;updateHeroPlayback();
+},{threshold:.05});
 heroObserver.observe($('#top'));
+function scheduleHero(){
+ const start=()=>{heroReady=true;updateHeroPlayback();};
+ if('requestIdleCallback' in window)window.requestIdleCallback(start,{timeout:1500});
+ else setTimeout(start,200);
+}
+if(document.readyState==='complete')scheduleHero();
+else window.addEventListener('load',scheduleHero,{once:true});
 
 const barCharts = $$('svg[data-animate-bar-chart]');
 const reducedChartMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -45,7 +61,7 @@ const tasks=[
 tasks.forEach(([file,title,setup,label])=>{
  const article=document.createElement('article');article.className='task-card';
  const button=document.createElement('button');button.className='image-zoom';button.dataset.video='assets/tasks/'+file+'.mp4';button.dataset.poster='assets/tasks/'+file+'.webp';button.dataset.caption=title+' · '+setup+'. Saved-trajectory replay, separate from learned-policy evaluation.';button.setAttribute('aria-label','Enlarge '+title.toLowerCase()+' task video, '+setup.toLowerCase());
- const video=document.createElement('video');video.className='task-video';video.dataset.src=button.dataset.video;video.poster=button.dataset.poster;video.width=640;video.height=480;video.loop=true;video.muted=true;video.defaultMuted=true;video.playsInline=true;video.preload='none';video.tabIndex=-1;video.setAttribute('aria-hidden','true');
+ const video=document.createElement('video');video.className='task-video';video.dataset.src=button.dataset.video;video.dataset.poster=button.dataset.poster;video.width=640;video.height=480;video.loop=true;video.muted=true;video.defaultMuted=true;video.playsInline=true;video.preload='none';video.tabIndex=-1;video.setAttribute('aria-hidden','true');
  const name=document.createElement('span');name.className='task-label';name.textContent=label;
  button.append(video,name);article.append(button);$('#task-grid').append(article);
 });
@@ -54,6 +70,14 @@ const imageDialog=$('#image-dialog');let lastFigure;
 const dialogVideo=$('#dialog-video');
 const taskVideos=$$('.task-video, .morphology-video');
 const visibleTaskVideos=new Set();
+const posterObserver=new IntersectionObserver(entries=>{
+ entries.forEach(({target,isIntersecting})=>{
+  if(!isIntersecting)return;
+  target.poster=target.dataset.poster;
+  posterObserver.unobserve(target);
+ });
+},{rootMargin:'240px'});
+taskVideos.forEach(video=>posterObserver.observe(video));
 function loadVideo(video){
  if(video.dataset.loaded)return;
  if(video.dataset.src)video.src=video.dataset.src;
@@ -77,8 +101,7 @@ const taskVideoObserver=new IntersectionObserver(entries=>{
 taskVideos.forEach(video=>taskVideoObserver.observe(video));
 document.addEventListener('visibilitychange',()=>{
  updateTaskPlayback();
- if(document.hidden)heroVideo.pause();
- else if(heroVisible&&!manuallyPaused)heroVideo.play().catch(()=>{});
+ updateHeroPlayback();
  if(document.hidden)dialogVideo.pause();
  else if(imageDialog.open&&!dialogVideo.hidden)dialogVideo.play().catch(()=>{});
 });

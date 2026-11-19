@@ -33,3 +33,5 @@ python3 scripts/export_architecture.py /absolute/path/to/RoboMorpher_architectur
 
 The SVG preserves the slide's layout and text, animates the connectors, and disables
 animation for visitors who prefer reduced motion.
+
+After editing source CSS, run `python3 scripts/build_styles.py` to refresh `site.css`. The homepage uses device-sized hero video variants and loads below-fold video posters on approach.
